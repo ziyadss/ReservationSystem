@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservationSystem.APIs", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservationSystem.Data", "ReservationSystem.Data\ReservationSystem.Data.csproj", "{8C5E1DC0-4163-4D13-BAE1-5AF4ECC4A305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationSystem.Repositories", "ReservationSystem.Repositories\ReservationSystem.Repositories.csproj", "{D55CB73E-7571-47D2-9A19-EA6D8A2A14A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservationSystem.Repositories", "ReservationSystem.Repositories\ReservationSystem.Repositories.csproj", "{D55CB73E-7571-47D2-9A19-EA6D8A2A14A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationSystem.DataStructures", "ReservationSystem.DataStructures\ReservationSystem.DataStructures.csproj", "{DC09F29A-7E57-4C01-9A0D-B5C17DC497E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservationSystem.DataStructures", "ReservationSystem.DataStructures\ReservationSystem.DataStructures.csproj", "{DC09F29A-7E57-4C01-9A0D-B5C17DC497E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
