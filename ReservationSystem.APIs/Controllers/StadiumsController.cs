@@ -6,7 +6,6 @@ using ReservationSystem.Data.Stadiums;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Stadiums;
 using ReservationSystem.Repositories.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;

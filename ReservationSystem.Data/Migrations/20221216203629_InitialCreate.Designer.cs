@@ -12,8 +12,8 @@ using ReservationSystem.Data;
 namespace ReservationSystem.Data.Migrations
 {
     [DbContext(typeof(ReservationSystemDbContext))]
-    [Migration("20221216154357_SeedAdminAndManager")]
-    partial class SeedAdminAndManager
+    [Migration("20221216203629_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,18 +110,6 @@ namespace ReservationSystem.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "admin",
-                            RoleId = "Admin"
-                        },
-                        new
-                        {
-                            UserId = "initial-manager",
-                            RoleId = "Manager"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -262,26 +250,6 @@ namespace ReservationSystem.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "Admin",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "User",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "Manager",
-                            Name = "Manager",
-                            NormalizedName = "MANAGER"
-                        });
                 });
 
             modelBuilder.Entity("ReservationSystem.Data.Users.User", b =>
@@ -367,50 +335,6 @@ namespace ReservationSystem.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "admin",
-                            AccessFailedCount = 0,
-                            Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "9b3f41e6-bf17-4da0-a2d6-974f425beb83",
-                            Email = "admin@domain.com",
-                            EmailConfirmed = false,
-                            FirstName = "AdminFirstName",
-                            Gender = 1,
-                            LastName = "AdminLastName",
-                            LockoutEnabled = false,
-                            Nationality = "eg",
-                            NormalizedEmail = "ADMIN@DOMAIN.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFVWP8hMCi5o0qaRMZ3TlIJqLW9pcNcC0H6ciajubmzlYrfr6WFj1BjbjnMBoz3ssg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "fe83c663-be26-4eda-bc54-f8fa6ea4bc02",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = "initial-manager",
-                            AccessFailedCount = 0,
-                            Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "0f2ebca1-eb03-4359-9d1e-67e637324731",
-                            Email = "initialmanager@domain.com",
-                            EmailConfirmed = false,
-                            FirstName = "ManagerFirstName",
-                            Gender = 1,
-                            LastName = "ManagerLastName",
-                            LockoutEnabled = false,
-                            Nationality = "eg",
-                            NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
-                            NormalizedUserName = "INITIALMANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA76RXNpi9eIH0/It69SpMbsg7L9cKM2xASJWpOoJsJctWe8Yk2ELESAwCka5Z4cwA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "69fdb02b-dfed-4104-804f-bca91b5315bd",
-                            TwoFactorEnabled = false,
-                            UserName = "initialManager"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

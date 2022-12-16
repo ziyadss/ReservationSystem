@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Tickets;
 using ReservationSystem.Repositories.Interfaces;
@@ -10,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ReservationSystem.Repositories;
 
 namespace ReservationSystem.APIs.Controllers;
 

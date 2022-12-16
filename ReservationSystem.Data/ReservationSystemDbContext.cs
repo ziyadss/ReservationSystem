@@ -37,7 +37,7 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         SeedInitialUsers(modelBuilder);
     }
 
-    private void SeedInitialUsers(ModelBuilder modelBuilder)
+    private static void SeedInitialUsers(ModelBuilder modelBuilder)
     {
         var hasher = new PasswordHasher<User>();
         var admin = new User

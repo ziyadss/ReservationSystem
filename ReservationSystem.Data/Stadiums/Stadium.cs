@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReservationSystem.Data.Stadiums
+namespace ReservationSystem.Data.Stadiums;
+
+public class Stadium
 {
-    public class Stadium
-    {
-        [Key]
-        public required string Name { get; set; }
+    [Key]
+    public required string Name { get; set; }
 
-        public required int Rows { get; set; }
+    public required int Rows { get; set; }
 
-        public required int Columns { get; set; }
+    public required int Columns { get; set; }
 
-        [InverseProperty(nameof(Match.Stadium))]
-        public List<Match>? Matches { get; set; }
+    [InverseProperty(nameof(Match.Stadium))]
+    public List<Match>? Matches { get; set; }
 
-        [NotMapped]
-        public int Capacity => Rows * Columns;
-    }
+    [NotMapped]
+    public int Capacity => Rows * Columns;
 }

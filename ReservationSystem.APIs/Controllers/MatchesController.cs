@@ -5,10 +5,8 @@ using Microsoft.Extensions.Logging;
 using ReservationSystem.Data.Matches;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Matches;
-using ReservationSystem.DataStructures.Tickets;
 using ReservationSystem.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
