@@ -9,7 +9,8 @@ namespace ReservationSystem.Repositories;
 public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    protected readonly DbContext _dbContext;
+    private readonly DbContext _dbContext;
+
     protected readonly DbSet<TEntity> _entitySet;
 
     public BaseRepository(DbContext dbContext)
