@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.Repositories;
 
-public class TicketRepository : BaseRepository<ReservationSystemDbContext, Ticket>, ITicketRepository
+public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
 {
     public TicketRepository(ReservationSystemDbContext dbContext) : base(dbContext)
     {

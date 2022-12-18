@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.Repositories;
 
-public class StadiumRepository : BaseRepository<ReservationSystemDbContext, Stadium>, IStadiumRepository
+public class StadiumRepository : BaseRepository<Stadium>, IStadiumRepository
 {
     public StadiumRepository(ReservationSystemDbContext dbContext) : base(dbContext)
     {

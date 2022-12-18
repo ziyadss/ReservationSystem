@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReservationSystem.Data.Matches;
+using ReservationSystem.Data.Tickets;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
@@ -16,10 +19,15 @@ namespace ReservationSystem.APIs.Controllers;
 public class MatchesController : BaseController<MatchesController>
 {
     private readonly IMatchRepository _matchRepository;
+    private readonly IStadiumRepository _stadiumRepository;
 
-    public MatchesController(ILogger<MatchesController> logger, IMatchRepository matchRepository) : base(logger)
+    public MatchesController(
+        ILogger<MatchesController> logger,
+        IMatchRepository matchRepository,
+        IStadiumRepository stadiumRepository) : base(logger)
     {
         _matchRepository = matchRepository;
+        _stadiumRepository = stadiumRepository;
     }
 
     /// <summary>
@@ -126,18 +134,17 @@ public class MatchesController : BaseController<MatchesController>
             return InvalidParameter("Home team and away team cannot be the same.");
         }
 
-        var match = CreateMatch(matchPayload);
-
         try
         {
+            var match = await CreateMatch(matchPayload).ConfigureAwait(false);
             await _matchRepository.AddAsync(match).ConfigureAwait(false);
+
+            return CreatedAtAction(nameof(GetMatch), new { id = match.Id }, new MatchDetailedInfo(match));
         }
         catch (Exception e)
         {
             return BadRequest("InvalidMatch", e.Message);
         }
-
-        return CreatedAtAction(nameof(GetMatch), new { id = match.Id }, new MatchDetailedInfo(match));
     }
 
     /// <summary>
@@ -199,16 +206,9 @@ public class MatchesController : BaseController<MatchesController>
             return NotFound();
         }
 
-        match.HomeTeamName = matchPayload.HomeTeam;
-        match.AwayTeamName = matchPayload.AwayTeam;
-        match.StadiumName = matchPayload.Stadium;
-        match.DateTime = matchPayload.Time;
-        match.Referee = matchPayload.Referee;
-        match.FirstLinesman = matchPayload.FirstLinesman;
-        match.SecondLinesman = matchPayload.SecondLinesman;
-
         try
         {
+            await UpdateMatchHelper(match, matchPayload).ConfigureAwait(false);
             await _matchRepository.UpdateAsync(match).ConfigureAwait(false);
         }
         catch (Exception e)
@@ -219,8 +219,23 @@ public class MatchesController : BaseController<MatchesController>
         return NoContent();
     }
 
-    private static Match CreateMatch(MatchPayload matchPayload)
+    private async Task<Match> CreateMatch(MatchPayload matchPayload)
     {
+        var stadium = await _stadiumRepository.FindAsync(matchPayload.Stadium).ConfigureAwait(false);
+        if (stadium is null)
+        {
+            throw new Exception($"Stadium {matchPayload.Stadium} does not exist.");
+        }
+
+        var tickets = new List<Ticket>(stadium.Rows * stadium.Columns);
+        for (int i = 1; i <= stadium.Rows; i++)
+        {
+            for (int j = 1; j <= stadium.Columns; j++)
+            {
+                tickets.Add(new Ticket { Row = i, Column = j });
+            }
+        }
+
         return new Match
         {
             HomeTeamName = matchPayload.HomeTeam,
@@ -229,7 +244,32 @@ public class MatchesController : BaseController<MatchesController>
             DateTime = matchPayload.Time,
             Referee = matchPayload.Referee,
             FirstLinesman = matchPayload.FirstLinesman,
-            SecondLinesman = matchPayload.SecondLinesman
+            SecondLinesman = matchPayload.SecondLinesman,
+            Stadium = stadium,
+            Tickets = tickets
         };
+    }
+
+    private async Task UpdateMatchHelper(Match match, MatchPayload matchPayload)
+    {
+        var stadium = await _stadiumRepository.FindAsync(matchPayload.Stadium).ConfigureAwait(false);
+        if (stadium is null)
+        {
+            throw new Exception($"Stadium {matchPayload.Stadium} does not exist.");
+        }
+
+        if (match.Tickets!.Any(t => !string.IsNullOrWhiteSpace(t.HolderUserName) && (t.Row > stadium.Rows || t.Column > stadium.Columns)))
+        {
+            throw new Exception("Cannot change stadium of a match with sold tickets outside bounds of new stadium.");
+        }
+
+        match.HomeTeamName = matchPayload.HomeTeam;
+        match.AwayTeamName = matchPayload.AwayTeam;
+        match.StadiumName = matchPayload.Stadium;
+        match.DateTime = matchPayload.Time;
+        match.Referee = matchPayload.Referee;
+        match.FirstLinesman = matchPayload.FirstLinesman;
+        match.SecondLinesman = matchPayload.SecondLinesman;
+        match.Stadium = stadium;
     }
 }

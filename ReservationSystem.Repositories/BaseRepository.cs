@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.Repositories;
 
-public abstract class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
-    where TDbContext : DbContext
+public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    protected readonly TDbContext _dbContext;
+    protected readonly DbContext _dbContext;
     protected readonly DbSet<TEntity> _entitySet;
 
-    public BaseRepository(TDbContext dbContext)
+    public BaseRepository(DbContext dbContext)
     {
         _dbContext = dbContext;
         _entitySet = _dbContext.Set<TEntity>();
@@ -24,13 +23,9 @@ public abstract class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
         return _entitySet.CountAsync();
     }
 
-    public virtual async Task<TEntity> FindAsync(params object[] keyValues)
+    public virtual async Task<TEntity?> FindAsync(params object[] keyValues)
     {
         var entity = await _entitySet.FindAsync(keyValues).ConfigureAwait(false);
-        if (entity is null)
-        {
-            throw new ArgumentException($"Entity with key {keyValues} not found");
-        }
 
         return entity;
     }
@@ -60,12 +55,6 @@ public abstract class BaseRepository<TDbContext, TEntity> : IRepository<TEntity>
 
         _entitySet.Update(item);
         return _dbContext.SaveChangesAsync();
-    }
-
-    public virtual async Task RemoveAsync(object key)
-    {
-        var entity = await FindAsync(key).ConfigureAwait(false);
-        await RemoveAsync(entity).ConfigureAwait(false);
     }
 
     public virtual Task RemoveAsync(TEntity item)
