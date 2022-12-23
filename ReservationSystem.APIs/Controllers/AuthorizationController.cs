@@ -107,7 +107,6 @@ public class AuthorizationController : BaseController<AuthorizationController>
     /// <response code="401">If the username or password is incorrect.</response>
     [HttpPost("login")]
     [ProducesResponseType(typeof(AuthenticationResult), StatusCodes.Status200OK)]
-
     public async Task<IActionResult> Login([FromBody] AuthenticationPayload authenticationPayload)
     {
         _logger.LogInformation($"Call to {nameof(AuthorizationController)}.{nameof(Login)}");
