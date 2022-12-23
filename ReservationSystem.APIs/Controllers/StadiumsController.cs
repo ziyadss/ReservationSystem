@@ -10,12 +10,20 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
 
+/// <summary>
+/// Provides methods for retrieving stadiums.
+/// </summary>
 [ApiController]
 [Route("api/stadiums")]
 public class StadiumsController : BaseController<StadiumsController>
 {
     private readonly IStadiumRepository _stadiumRepository;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="StadiumsController"/> class.
+    /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="stadiumRepository">The stadium repository.</param>
     public StadiumsController(ILogger<StadiumsController> logger, IStadiumRepository stadiumRepository) : base(logger)
     {
         _stadiumRepository = stadiumRepository;
@@ -54,7 +62,7 @@ public class StadiumsController : BaseController<StadiumsController>
     /// <summary>
     /// Gets a stadium by name.
     /// </summary>
-    /// <param name="name">The name of the stadium.</param>
+    /// <param name="stadiumName">The name of the stadium.</param>
     /// <response code="200">Returns a <see cref="StadiumDetailedInfo"/> item.</response>
     /// <response code="404">If the stadium is not found.</response>
     [HttpGet("{stadiumName}")]

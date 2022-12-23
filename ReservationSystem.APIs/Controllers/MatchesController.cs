@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
 
+/// <summary>
+/// Provides methods for matches.
+/// </summary>
 [ApiController]
 [Route("api/matches")]
 public class MatchesController : BaseController<MatchesController>
@@ -21,6 +24,12 @@ public class MatchesController : BaseController<MatchesController>
     private readonly IMatchRepository _matchRepository;
     private readonly IStadiumRepository _stadiumRepository;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="MatchesController"/> class.
+    /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="matchRepository">The match repository.</param>
+    /// <param name="stadiumRepository">The stadium repository.</param>
     public MatchesController(
         ILogger<MatchesController> logger,
         IMatchRepository matchRepository,
@@ -63,7 +72,7 @@ public class MatchesController : BaseController<MatchesController>
     /// <summary>
     /// Gets a match by id.
     /// </summary>
-    /// <param name="id">The id of the match.</param>
+    /// <param name="matchId">The id of the match.</param>
     /// <response code="200">Returns a <see cref="MatchDetailedInfo"/> item.</response>
     /// <response code="404">If the match is not found.</response>
     [HttpGet("{matchId}")]
@@ -150,6 +159,7 @@ public class MatchesController : BaseController<MatchesController>
     /// <summary>
     /// Updates a match.
     /// </summary>
+    /// <param name="matchId">The id of the match.</param>
     /// <param name="matchPayload">The payload containing the match information.</param>
     /// <response code="204">The match was updated.</response>
     /// <response code="400">If the match payload is null.</response>

@@ -12,12 +12,20 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
 
+/// <summary>
+/// Provides methods for retrieving tickets.
+/// </summary>
 [ApiController]
 [Route("api/tickets")]
 public class TicketsController : BaseController<TicketsController>
 {
     private readonly ITicketRepository _ticketRepository;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="TicketsController"/> class.
+    /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="ticketRepository">The ticket repository.</param>
     public TicketsController(ILogger<TicketsController> logger, ITicketRepository ticketRepository) : base(logger)
     {
         _ticketRepository = ticketRepository;
@@ -60,7 +68,7 @@ public class TicketsController : BaseController<TicketsController>
     /// Gets a ticket for a match.
     /// </summary>
     /// <param name="ticketNumber">The ticket number.</param>
-    /// <response code="200">A <see cref="TicketInfo""/> object.</response>
+    /// <response code="200">A <see cref="TicketInfo"/> object.</response>
     [HttpGet("{ticketNumber}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetTicket([FromRoute] string ticketNumber)

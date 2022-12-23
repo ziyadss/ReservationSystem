@@ -13,12 +13,20 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
 
+/// <summary>
+/// Provides methods for user management.
+/// </summary>
 [ApiController]
 [Route("api/users")]
 public class UsersController : BaseController<UsersController>
 {
     private readonly UserManager<User> _userManager;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="UsersController"/> class.
+    /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="userManager">The user manager.</param>
     public UsersController(ILogger<UsersController> logger, UserManager<User> userManager) : base(logger)
     {
         _userManager = userManager;
@@ -103,7 +111,7 @@ public class UsersController : BaseController<UsersController>
     /// Updates a user's role.
     /// </summary>
     /// <param name="userName">The user name.</param>
-    /// <param name="role">The role.</param>
+    /// <param name="updateRolePayload">The update role payload.</param>
     /// <response code="204">The user's role was updated or did not need to be updated.</response>
     /// <response code="400">The user name or role sent is null or empty, or failed to update user's role for another reason.</response>
     /// <response code="404">The user was not found.</response>

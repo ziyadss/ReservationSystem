@@ -14,11 +14,20 @@ using ReservationSystem.Repositories;
 using ReservationSystem.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace ReservationSystem.APIs;
 
+/// <summary>
+/// The main entry point for the application.
+/// </summary>
 public class Program
 {
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    /// <param name="args">The command-line arguments.</param>
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -108,8 +117,8 @@ public class Program
                 };
                 options.AddSecurityRequirement(openApiSecurityRequirement);
 
-                //var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
         var app = builder.Build();

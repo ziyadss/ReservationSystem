@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
 
+/// <summary>
+/// Provides methods for user registration, login, and password change.
+/// </summary>
 [ApiController]
 [Route("api/auth")]
 public class AuthorizationController : BaseController<AuthorizationController>
@@ -24,6 +27,12 @@ public class AuthorizationController : BaseController<AuthorizationController>
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
     private readonly JwtTokenSettings _jwtBearerTokenSettings;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="AuthorizationController"/> class.
+    /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="userManager">The user manager.</param>
+    /// <param name="jwtBearerTokenSettings">The JWT bearer token settings.</param>
     public AuthorizationController(
         ILogger<AuthorizationController> logger,
         UserManager<User> userManager,
