@@ -117,8 +117,11 @@ public class Program
                 };
                 options.AddSecurityRequirement(openApiSecurityRequirement);
 
-                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                var xmlFiles = Directory.EnumerateFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);
+                foreach (var xmlFile in xmlFiles)
+                {
+                    options.IncludeXmlComments(xmlFile);
+                }
             });
 
         var app = builder.Build();
