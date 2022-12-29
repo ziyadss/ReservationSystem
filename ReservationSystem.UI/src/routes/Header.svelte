@@ -7,7 +7,7 @@
     <header class="header">
         <div class="container">
             <nav class="navigation">
-                <a href="index.html" class="logo">
+                <a href="/" class="logo">
                     <img src={logo} alt="Logo" class="logo-img" />
                 </a>
                 <div class="mobile-menu-icon">
