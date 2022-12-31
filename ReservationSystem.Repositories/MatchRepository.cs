@@ -41,7 +41,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         var stadiumConflict = _entitySet
             .Where(m => m.StadiumName == match.StadiumName)
             .AsEnumerable()
-            .Any(m => Math.Abs((m.DateTime.Date - match.DateTime.Date).TotalHours) <= 3);
+            .Any(m => Math.Abs((m.DateTime - match.DateTime).TotalHours) < 3);
 
         if (stadiumConflict)
         {
@@ -58,15 +58,24 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
             throw new ArgumentNullException(nameof(match));
         }
 
-        var conflict = await _entitySet
-            .AnyAsync(m => m.DateTime.Date == match.DateTime.Date && m.Id != match.Id &&
+        var teamConflict = await _entitySet
+            .AnyAsync(m => m.DateTime.Date == match.DateTime.Date &&
             (m.HomeTeamName == match.HomeTeamName || m.HomeTeamName == match.AwayTeamName ||
-            m.AwayTeamName == match.HomeTeamName || m.AwayTeamName == match.AwayTeamName ||
-            m.StadiumName == match.StadiumName)).ConfigureAwait(false);
+            m.AwayTeamName == match.HomeTeamName || m.AwayTeamName == match.AwayTeamName)).ConfigureAwait(false);
 
-        if (conflict)
+        if (teamConflict)
         {
-            throw new Exception("Match cannot be scheduled on the same day as another match for the same stadium or team.");
+            throw new Exception("Match cannot be scheduled on the same day as another match for the same team.");
+        }
+
+        var stadiumConflict = _entitySet
+            .Where(m => m.StadiumName == match.StadiumName)
+            .AsEnumerable()
+            .Any(m => Math.Abs((m.DateTime - match.DateTime).TotalHours) < 3);
+
+        if (stadiumConflict)
+        {
+            throw new Exception("Match cannot be scheduled within 3 hours as another match for the same stadium.");
         }
 
         await base.UpdateAsync(match).ConfigureAwait(false);
