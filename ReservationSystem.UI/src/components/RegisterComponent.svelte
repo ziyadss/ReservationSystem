@@ -29,7 +29,6 @@
 		console.log(user.username);
 		if (response.ok) {
 			const { user } = await response.json();
-			store.set(user);
 			window.location.replace('/login');
 		} else {
 			alert('Please enter a valid credentials');
