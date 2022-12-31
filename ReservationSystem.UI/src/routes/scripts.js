@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     let menu = document.querySelector('.nav_menu');
     let menu_toggle = document.querySelector('.mobile-menu-icon');
@@ -9,3 +10,4 @@ document.addEventListener('DOMContentLoaded', () => {
             menu_toggle_icon?.setAttribute('name', 'menu-outline');
     });
 });
+
