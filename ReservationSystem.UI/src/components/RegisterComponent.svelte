@@ -16,7 +16,7 @@
 	};
 
 	async function registerUser() {
-		const response = await fetch('/api/register', {
+		const response = await fetch('/api/auth/register', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -32,7 +32,7 @@
 			store.set(user);
 			window.location.replace('/login');
 		} else {
-			alert('Please enter a valid username and password');
+			alert('Please enter a valid credentials');
 		}
 	}
 </script>
@@ -65,7 +65,12 @@
 									type="text"
 									class="form-control form-control-lg"
 									bind:value={user.username}
+									required
 								/>
+							</div>
+							<div class="form-outline mb-4">
+								<label class="input-title" id="usernameLabel" for="form2Example18">Email</label>
+								<input type="text" class="form-control form-control-lg" bind:value={user.email} />
 							</div>
 							<div class="form-outline mb-4">
 								<label class="input-title" id="passwordLabel" for="form2Example28">Password</label>
@@ -73,6 +78,7 @@
 									type="password"
 									class="form-control form-control-lg"
 									bind:value={user.password}
+									required
 								/>
 							</div>
 							<div class="form-outline mb-4">
@@ -82,6 +88,7 @@
 									type="text"
 									class="form-control form-control-lg"
 									bind:value={user.first_name}
+									required
 								/>
 							</div>
 							<div class="form-outline mb-4">
@@ -90,6 +97,7 @@
 									type="text"
 									class="form-control form-control-lg"
 									bind:value={user.last_name}
+									required
 								/>
 							</div>
 							<div class=" row mb-4">
@@ -101,7 +109,7 @@
 								</div>
 								<div class="col">
 									<label class="input-title" for="form2Example28">Gender</label>
-									<select class="form-control form-control-lg" bind:value={user.gender}>
+									<select class="form-control form-control-lg" bind:value={user.gender} required>
 										<option value="F">Female</option>
 										<option value="M">Male</option>
 										<option value="Other">Other</option>
@@ -109,12 +117,10 @@
 								</div>
 							</div>
 							<div class="pt-1 mb-4">
-								<button class="btn btn-info btn-lg btn-block" id="btn-main" type="button"
-									>Login</button
+								<button class="btn btn-info btn-lg btn-block" id="btn-main" type="submit"
+									>Register</button
 								>
 							</div>
-
-							<p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
 							<p>Already a member? <a href="/login" class="link-info">Login</a></p>
 						</form>
 					</div>
