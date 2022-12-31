@@ -148,7 +148,7 @@ public class MatchesController : BaseController<MatchesController>
             var match = await CreateMatch(matchPayload).ConfigureAwait(false);
             await _matchRepository.AddAsync(match).ConfigureAwait(false);
 
-            return CreatedAtAction(nameof(GetMatch), new { id = match.Id }, new MatchDetailedInfo(match));
+            return CreatedAtAction(nameof(GetMatch), new { matchId = match.Id }, new MatchDetailedInfo(match));
         }
         catch (Exception e)
         {

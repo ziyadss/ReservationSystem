@@ -77,7 +77,7 @@ public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
             throw new Exception($"Ticket {ticket.TicketNumber} is not booked by {userName}.");
         }
 
-        if (DateTime.Now.AddDays(3) > ticket.Match!.DateTime)
+        if (DateTime.UtcNow.AddDays(3) > ticket.Match!.DateTime)
         {
             throw new Exception($"Ticket {ticket.TicketNumber} cannot be cancelled because the match is in less than 3 days.");
         }

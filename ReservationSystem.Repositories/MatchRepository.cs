@@ -28,6 +28,11 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
             throw new ArgumentNullException(nameof(match));
         }
 
+        if (match.DateTime < DateTime.UtcNow.AddDays(1))
+        {
+            throw new Exception("Match cannot be scheduled less than one day before its time.");
+        }
+
         var teamConflict = await _entitySet
             .AnyAsync(m => m.DateTime.Date == match.DateTime.Date &&
             (m.HomeTeamName == match.HomeTeamName || m.HomeTeamName == match.AwayTeamName ||

@@ -121,7 +121,7 @@ public class StadiumsController : BaseController<StadiumsController>
         var stadium = CreateStadium(stadiumPayload);
         await _stadiumRepository.AddAsync(stadium).ConfigureAwait(false);
 
-        return CreatedAtAction(nameof(GetStadium), new { name = stadium.Name }, new StadiumInfo(stadium));
+        return CreatedAtAction(nameof(GetStadium), new { stadiumName = stadium.Name }, new StadiumInfo(stadium));
     }
 
     private static Stadium CreateStadium(StadiumPayload stadiumPayload)
