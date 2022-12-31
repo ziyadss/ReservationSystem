@@ -22,8 +22,16 @@
     --mobile-nav: #7d3e59;
     --count-down-bg: rgba(238, 235, 235, 0.295);
     --timer-before-bg: rgb(218, 201, 109);
-    --footer-bg: #EEEEE4 --footer-color: #8A1538;
+    --footer-bg: #EEEEE4;
+    --footer-color: #8A1538;
     --date-input-width: 25rem;
+    --bg: rgb(227, 232, 255);
+    --card-bg: #EEEEE4;
+    --shadow: rgba(235, 240, 250, 0.731);
+    --text-dark: rgb(5, 29, 49);
+    --badge-text: #343483;
+    --btn-bg: var(--primary); /* rgb(82, 84, 221); */
+    --scrollbar-bg: rgb(250, 248, 255);
 }
 
 html {
