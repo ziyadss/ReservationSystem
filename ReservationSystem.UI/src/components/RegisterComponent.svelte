@@ -32,7 +32,7 @@
 			store.set(user);
 			window.location.replace('/login');
 		} else {
-			alert('Please enter a valid username and password');
+			alert('Please enter a valid credentials');
 		}
 	}
 </script>
@@ -66,6 +66,10 @@
 									class="form-control form-control-lg"
 									bind:value={user.username}
 								/>
+							</div>
+							<div class="form-outline mb-4">
+								<label class="input-title" id="usernameLabel" for="form2Example18">Email</label>
+								<input type="text" class="form-control form-control-lg" bind:value={user.email} />
 							</div>
 							<div class="form-outline mb-4">
 								<label class="input-title" id="passwordLabel" for="form2Example28">Password</label>
@@ -113,8 +117,6 @@
 									>Login</button
 								>
 							</div>
-
-							<p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
 							<p>Already a member? <a href="/login" class="link-info">Login</a></p>
 						</form>
 					</div>
