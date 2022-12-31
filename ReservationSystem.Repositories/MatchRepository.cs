@@ -38,8 +38,10 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
             throw new Exception("Match cannot be scheduled on the same day as another match for the same team.");
         }
 
-        var stadiumConflict = await _entitySet
-            .AnyAsync(m => Math.Abs((m.DateTime.Date - match.DateTime.Date).TotalHours) <= 3 && m.StadiumName == match.StadiumName).ConfigureAwait(false);
+        var stadiumConflict = _entitySet
+            .Where(m => m.StadiumName == match.StadiumName)
+            .AsEnumerable()
+            .Any(m => Math.Abs((m.DateTime.Date - match.DateTime.Date).TotalHours) <= 3);
 
         if (stadiumConflict)
         {
