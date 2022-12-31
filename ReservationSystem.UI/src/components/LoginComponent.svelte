@@ -7,7 +7,7 @@
 	let password = '';
 
 	async function login() {
-		const response = await fetch('/api/login', {
+		const response = await fetch('/api/auth/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -81,7 +81,7 @@
 							</div>
 
 							<div class="pt-1 mb-4">
-								<button class="btn btn-info btn-lg btn-block" id="btn-main" type="button"
+								<button class="btn btn-info btn-lg btn-block" id="btn-main" type="submit"
 									>Login</button
 								>
 							</div>
