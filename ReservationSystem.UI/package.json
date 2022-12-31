@@ -32,6 +32,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"date-picker-svelte": "^2.2.5",
+		"mdb-ui-kit": "^6.0.1",
 		"svelte-typewriter": "^3.1.4"
 	}
 }
