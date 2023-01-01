@@ -7,6 +7,16 @@
 	if (browser) {
 		loggedin = localStorage.getItem('token') ? true : false;
 	}
+
+
+	function signOut() {
+		if (browser) {
+			window.localStorage.removeItem('token');
+			window.localStorage.removeItem('role');
+			alert('You have been logged out');
+			window.location.replace('/');
+		}
+	}
 </script>
 
 <section id="hero">
@@ -57,7 +67,7 @@
 							<a
 								href="/"
 								class="btn-outline"
-								on:click={() => { window.localStorage.removeItem('token'); window.localStorage.removeItem('role'); } }
+								on:click={() => signOut()}
 							>
 								<span>Logout</span>
 							</a>
