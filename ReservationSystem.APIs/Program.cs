@@ -38,7 +38,7 @@ public class Program
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         builder.Services.AddDbContext<ReservationSystemDbContext>(options => options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+        builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
         builder.Services
             .AddIdentity<User, Role>(options =>
             {
@@ -133,7 +133,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        app.UseCors("AllowAll");
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
