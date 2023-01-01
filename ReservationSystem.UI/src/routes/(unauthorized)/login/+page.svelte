@@ -2,6 +2,21 @@
 	import { browser } from "$app/environment"
 	import logo from '$lib/images/logo.svg';
 	import cover from '$lib/images/cover-photo.jpg';
+	import { onMount } from "svelte";
+	import { redirect } from "@sveltejs/kit";
+
+	let token = '';
+	onMount(async () => {
+		let _token;
+		if (browser) {
+			_token = window.localStorage.getItem('token');
+		}
+
+		if (_token) {
+			redirect(302, '/');
+			token = _token;
+		}
+	});
 
 	let user = {
 		userName: '',
@@ -20,8 +35,19 @@
 		});
 		if (response.ok) {
 			const data = await response.json();
-			if (browser) window.localStorage.setItem('token', data.token);
-			window.location.replace('/');
+			if (browser) {
+				window.localStorage.setItem('token', data.token);
+				window.localStorage.setItem('role', data.role);
+			}
+			if (data.role == 'User') {
+				window.location.replace('/');
+			}
+			else if (data.role == 'Manager') {
+				window.location.replace('/');
+			}
+			else if (data.role == 'Admin') {
+				window.location.replace('/admin/list');
+			}
 		} else {
 			alert('Invalid credentials');
 		}
