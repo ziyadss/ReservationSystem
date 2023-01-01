@@ -1,7 +1,7 @@
-<script lang='js'>
+<script lang="js">
 	import logo from '$lib/images/logo.svg';
 	import { page } from '$app/stores';
-	import { browser } from "$app/environment"
+	import { browser } from '$app/environment';
 
 	let loggedin = false;
 	if (browser) {
@@ -54,7 +54,11 @@
 					{/if}
 					<li class="nav_list btn-nav">
 						{#if loggedin}
-							<a href="/" class="btn-outline" on:click={() => window.localStorage.removeItem('token')}>
+							<a
+								href="/"
+								class="btn-outline"
+								on:click={() => window.localStorage.removeItem('token')}
+							>
 								<span>Logout</span>
 							</a>
 						{:else}
