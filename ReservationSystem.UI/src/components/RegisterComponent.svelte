@@ -5,14 +5,14 @@
 	import { DateInput } from 'date-picker-svelte';
 	let date = new Date();
 	let user = {
-		username: '',
+		userName: '',
 		password: '',
-		firstname: '',
-		lastname: '',
+		email: '',
+		firstName: '',
+		lastName: '',
 		birthdate: date,
 		gender: '',
-		nationality: '',
-		email: ''
+		nationality: ''
 	};
 
 	async function registerUser() {
@@ -25,14 +25,10 @@
 				user
 			})
 		});
-		console.log(response);
-		console.log(user.username);
-		console.log(JSON.stringify(user));
 		if (response.ok) {
 			const { user } = await response.json();
 			window.location.replace('/login');
 		} else {
-			console.log(JSON.stringify(response.body));
 			alert('Please enter a valid credentials');
 		}
 	}
@@ -65,7 +61,7 @@
 								<input
 									type="text"
 									class="form-control form-control-lg"
-									bind:value={user.username}
+									bind:value={user.userName}
 									required
 								/>
 							</div>
@@ -88,7 +84,7 @@
 								<input
 									type="text"
 									class="form-control form-control-lg"
-									bind:value={user.firstname}
+									bind:value={user.firstName}
 									required
 								/>
 							</div>
@@ -97,7 +93,7 @@
 								<input
 									type="text"
 									class="form-control form-control-lg"
-									bind:value={user.lastname}
+									bind:value={user.lastName}
 									required
 								/>
 							</div>
@@ -111,9 +107,10 @@
 								<div class="col">
 									<label class="input-title" for="form2Example28">Gender</label>
 									<select class="form-control form-control-lg" bind:value={user.gender} required>
-										<option value="F">Female</option>
-										<option value="M">Male</option>
-										<option value="Other">Other</option>
+										<option value="3">Female</option>
+										<option value="2">Male</option>
+										<option value="1">Unspecified</option>
+										<option value="0">Unknown</option>
 									</select>
 								</div>
 							</div>
