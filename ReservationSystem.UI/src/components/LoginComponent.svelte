@@ -1,7 +1,7 @@
 <script>
-	import { store } from '../hooks/auth.js';
-	import logo from '../lib/images/logo.svg';
-	import cover from '../lib/images/cover-photo.jpg';
+	import { store } from '../hooks/login.js';
+	import logo from '$lib/images/logo.svg';
+	import cover from '$lib/images/cover-photo.jpg';
 
 	let username = '';
 	let password = '';
@@ -17,9 +17,6 @@
 				password
 			})
 		});
-		console.log(response);
-		console.log(username);
-		console.log(password);
 		if (response.ok) {
 			const { user } = await response.json();
 			store.set(user);
@@ -93,12 +90,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6 px-0 d-none d-sm-block">
-				<img
-					src={cover}
-					alt="Login image"
-					class="w-100 vh-100"
-					style="object-fit: cover; object-position: left;"
-				/>
+				<img src={cover} alt="cover" class="w-100 vh-100" style="object-fit: cover; object-position: left;" />
 			</div>
 		</div>
 	</div>
@@ -116,6 +108,7 @@
     <button type="submit" class="btn-primary">Login</button>
 </form> -->
 <style>
+	/*
 	.bg-image-vertical {
 		position: relative;
 		overflow: hidden;
@@ -129,4 +122,5 @@
 			height: 100%;
 		}
 	}
+	*/
 </style>

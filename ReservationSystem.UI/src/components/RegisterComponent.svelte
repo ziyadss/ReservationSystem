@@ -1,6 +1,6 @@
 <script lang="js">
 	import logo from '$lib/images/logo.svg';
-	import { store } from '../hooks/auth';
+	import { store } from '../hooks/login.js';
 	import cover from '../lib/images/cover-photo.jpg';
 	import { DateInput } from 'date-picker-svelte';
 	let date = new Date();
@@ -21,10 +21,11 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
+			body: JSON.stringify(
 				user
-			})
+			)
 		});
+		console.log(response);
 		if (response.ok) {
 			const { user } = await response.json();
 			window.location.replace('/login');
@@ -40,7 +41,7 @@
 			<div class="col-sm-6 px-0 d-none d-sm-block">
 				<img
 					src={cover}
-					alt="Login image"
+					alt="Login"
 					class="w-100 vh-100"
 					style="object-fit: cover; object-position: left;"
 				/>
@@ -127,109 +128,3 @@
 		</div>
 	</div>
 </section>
-<!-- <div class="container">
-	<div class="row justify-content-center align-items-center py-5 vh-100">
-		<div class="col-12 col-md-8 col-lg-6 col-xl-6 align-self-center">
-			<form
-				on:submit|preventDefault={registerUser}
-				class="form-control shadow-lg p-4 px-5"
-				id="login-form"
-			>
-				<div class="form-group py-2 px-3">
-					<label for="username" class="input-title px-3">Username</label>
-					<input
-						type="text"
-						class="form-control rounded-pill border-white p-3 px-3"
-						placeholder="New username"
-						style="background-color:#F4F6FB;"
-						required
-					/>
-				</div>
-				<div class="form-group py-2 px-3">
-					<label for="title" class="input-title px-3">Password</label>
-					<input
-						type="password"
-						class="form-control rounded-pill border-white p-3 px-3"
-						placeholder="New Password"
-						style="background-color:#F4F6FB;"
-						required
-					/>
-				</div>
-				<div class="justify-content-md-center py-4 px-3">
-					<input
-						type="submit"
-						class="btn rounded-pill w-100 shadow-sm"
-						value="Register"
-						id="submitbutton"
-					/>
-				</div>
-				<div class="py-2 text-center">
-					<h3>
-						Already registered? <a style="color:#2D2A5D;" href="/login">Log-in</a>
-					</h3>
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
-<!-- <div class="container">
-	<div class="row justify-content-center m-3 shadow-lg">
-		<div class="col-lg-4 p-5 " style="background-color: #8a1538;">
-			<div class="row">
-				<div class="col-2" />
-				<div class="col-8" style="display: flex; justify-content: center;">
-					<img src={logo} alt="logo" class="img-fluid mb-3" />
-				</div>
-				<div class="col-2" />
-			</div>
-			<div class="row mt-3">
-				<div class="col" />
-				<div class="col" />
-				<div class="col" />
-			</div>
-		</div>
-		<div class="col-lg-7 p-3">
-			<div class="row text-center p-3 m-2">
-				<h1 class="display-6 text-center">Welcome!</h1>
-				<p class="lead text-center">Begin your journey here!</p>
-			</div>
-			<div class="row p-2 m-2 align-items-center">
-				<div class="col" />
-				<div class="col-9">
-					<form class="form-control">
-						<div class="form-group py-2">
-							<label for="username">Username</label>
-							<input
-								type="text"
-								class="form-control"
-								id="username"
-								name="username"
-								placeholder="enter username"
-								required
-							/>
-						</div>
-						<div class="form-group py-2">
-							<label for="registerpassword">Password</label>
-							<input
-								type="password"
-								class="form-control"
-								id="registerpassword"
-								name="password"
-								placeholder="enter password"
-								required
-							/>
-						</div>
-						<div class="form-group" style="display: flex; justify-content: center;">
-							<input type="submit" class=" btn rounded-pill" id="btn-main" value="Register" />
-						</div>
-					</form>
-				</div>
-				<div class="col" />
-			</div>
-			<div class="row text-center p-2 m-2">
-				<p class="lead text-center p-0 m-0">Already a user?</p>
-				<a class="lead text-center p-0 m-0" href="/login">Log in</a>
-			</div>
-		</div>
-	</div>
-</div> -->
