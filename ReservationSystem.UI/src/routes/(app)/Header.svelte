@@ -1,9 +1,12 @@
-<script>
+<script lang='js'>
 	import logo from '$lib/images/logo.svg';
 	import { page } from '$app/stores';
-	import { store } from '../../hooks/login';
+	import { browser } from "$app/environment"
 
 	let loggedin = false;
+	if (browser) {
+		loggedin = localStorage.getItem('token') ? true : false;
+	}
 </script>
 
 <section id="hero">
@@ -51,9 +54,8 @@
 					{/if}
 					<li class="nav_list btn-nav">
 						{#if loggedin}
-							<a href="/" class="btn-outline" on:click={() => store.set(null)}>
+							<a href="/" class="btn-outline" on:click={() => window.localStorage.removeItem('token')}>
 								<span>Logout</span>
-								<iconify-icon icon="ri:compass-3-line" />
 							</a>
 						{:else}
 							<a href="/login" class="btn-outline">
