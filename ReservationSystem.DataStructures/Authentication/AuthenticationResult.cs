@@ -21,4 +21,9 @@ public class AuthenticationResult
     /// The token expiry date and time.
     /// </summary>
     public required DateTime Expiry { get; set; }
+
+    /// <summary>
+    /// The user's role.
+    /// </summary>
+    public required string Role { get; set; }
 }
