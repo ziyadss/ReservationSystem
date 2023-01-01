@@ -1,6 +1,8 @@
 <script>
     import mascot from '$lib/images/mascot.png';
+    import { store } from '../../hooks/login.js';
     import { tweened } from 'svelte/motion';
+    console.log ($store);
     
     let nextMatchIn = 172800; // 2 days in seconds
     let timer = tweened(nextMatchIn)
