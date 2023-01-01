@@ -57,7 +57,7 @@
 							<a
 								href="/"
 								class="btn-outline"
-								on:click={() => window.localStorage.removeItem('token')}
+								on:click={() => { window.localStorage.removeItem('token'); window.localStorage.removeItem('role'); } }
 							>
 								<span>Logout</span>
 							</a>
