@@ -7,16 +7,16 @@
 	let user = {
 		username: '',
 		password: '',
-		first_name: '',
-		last_name: '',
-		birth_date: date,
+		firstname: '',
+		lastname: '',
+		birthdate: date,
 		gender: '',
 		nationality: '',
 		email: ''
 	};
 
 	async function registerUser() {
-		const response = await fetch('/api/auth/register', {
+		const response = await fetch('https://localhost:7123/api/auth/register', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -27,10 +27,12 @@
 		});
 		console.log(response);
 		console.log(user.username);
+		console.log(JSON.stringify(user));
 		if (response.ok) {
 			const { user } = await response.json();
 			window.location.replace('/login');
 		} else {
+			console.log(JSON.stringify(response.body));
 			alert('Please enter a valid credentials');
 		}
 	}
@@ -86,7 +88,7 @@
 								<input
 									type="text"
 									class="form-control form-control-lg"
-									bind:value={user.first_name}
+									bind:value={user.firstname}
 									required
 								/>
 							</div>
@@ -95,7 +97,7 @@
 								<input
 									type="text"
 									class="form-control form-control-lg"
-									bind:value={user.last_name}
+									bind:value={user.lastname}
 									required
 								/>
 							</div>
