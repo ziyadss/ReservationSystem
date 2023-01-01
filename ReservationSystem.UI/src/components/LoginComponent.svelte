@@ -20,10 +20,10 @@
 		console.log(response);
 		console.log(username);
 		console.log(password);
-
 		if (response.ok) {
 			const { user } = await response.json();
 			store.set(user);
+			window.location.replace('/');
 		} else {
 			alert('Invalid credentials');
 		}
