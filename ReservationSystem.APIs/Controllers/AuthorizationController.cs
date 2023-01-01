@@ -206,7 +206,8 @@ public class AuthorizationController : BaseController<AuthorizationController>
         {
             UserName = user.UserName!,
             Token = tokenString,
-            Expiry = expiry
+            Expiry = expiry,
+            Role = role
         };
     }
 }
