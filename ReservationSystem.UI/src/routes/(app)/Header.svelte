@@ -2,6 +2,8 @@
 	import logo from '$lib/images/logo.svg';
 	import { page } from '$app/stores';
 	import { store } from '../../hooks/auth';
+
+	let loggedin = false;
 </script>
 
 <section id="hero">
@@ -22,14 +24,7 @@
 							<a href="/" class="nav_link">Home</a>
 						{/if}
 					</li>
-					<li class="nav_list">
-						{#if $page.url.pathname === '/schedule'}
-							<a href="/schedule" class="nav_link active" target="_matches">Match Schedule </a>
-						{:else}
-							<a href="/schedule" class="nav_link" target="_matches">Match Schedule </a>
-						{/if}
-					</li>
-					{#if $store != null}
+					{#if loggedin}
 						<li class="nav_list">
 							{#if $page.url.pathname === '/profile'}
 								<a href="/profile" class="nav_link active">Profile</a>
@@ -38,9 +33,25 @@
 							{/if}
 						</li>
 					{/if}
+					<li class="nav_list">
+						{#if $page.url.pathname === '/schedule'}
+							<a href="/schedule" class="nav_link active" target="_matches">Match Schedule </a>
+						{:else}
+							<a href="/schedule" class="nav_link" target="_matches">Match Schedule </a>
+						{/if}
+					</li>
+					{#if loggedin}
+						<li class="nav_list">
+							{#if $page.url.pathname === '/reservation'}
+								<a href="/reservation" class="nav_link active">Reserve your seat!</a>
+							{:else}
+								<a href="/reservation" class="nav_link">Reserve your seat!</a>
+							{/if}
+						</li>
+					{/if}
 					<li class="nav_list btn-nav">
-						{#if $store != null}
-							<a href="/" class="btn-outline" on:click={() => store.set(null)}>
+						{#if loggedin}
+							<a href="/" class="btn-outline" on:click={() => store.set('')}>
 								<span>Logout</span>
 								<iconify-icon icon="ri:compass-3-line" />
 							</a>
