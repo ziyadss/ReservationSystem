@@ -77,12 +77,9 @@
 			body: JSON.stringify(match)
 		});
 		if (response.ok) {
-			const data = await response.json();
 			await Swal.fire('Match Edited!', 'The match has been edited.', 'success');
 			window.location.replace('/manager/match/list');
 		} else {
-			const error = await response.json();
-			console.log(response.json());
 			await Swal.fire('Failed!', 'Error editing match.', 'error');
 			return;
 		}

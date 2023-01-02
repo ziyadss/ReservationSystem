@@ -20,6 +20,11 @@
 	};
 
 	async function registerUser() {
+		const userDate = new Date(user.birthdate);
+		if (userDate > new Date(2019, 1)) {
+			await Swal.fire('Invalid!', 'Invalid birthdate.', 'error');
+			return;
+		}
 		const response = await fetch('https://localhost:7123/api/auth/register', {
 			method: 'POST',
 			headers: {
@@ -32,7 +37,11 @@
 			if (browser) window.localStorage.setItem('token', data.token);
 			window.location.replace('/');
 		} else {
-			await Swal.fire('Invalid!', 'Invalid credentials.', 'error');
+			await Swal.fire(
+				'Invalid!',
+				'Must enter a password with a minimum of 8 characters with at least 1 lowercase & 1 uppercase characters and 1 number.',
+				'error'
+			);
 		}
 	}
 </script>
@@ -77,7 +86,7 @@
 							<div class="form-outline mb-4">
 								<label class="input-title" id="usernameLabel" for="form2Example18">Email</label>
 								<input
-									type="text"
+									type="email"
 									name="email"
 									class="form-control form-control-lg"
 									bind:value={user.email}
@@ -160,7 +169,13 @@
 									>Register</button
 								>
 							</div>
-							<p>Already a member? <a href="/login" class="link-info">Login</a></p>
+							<p>
+								Already a member? <a
+									href="/login"
+									class="link-info"
+									on:click={() => window.location.replace('/login')}>Login</a
+								>
+							</p>
 						</form>
 					</div>
 				</div>
