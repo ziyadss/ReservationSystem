@@ -29,7 +29,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
             throw new ArgumentNullException(nameof(match));
         }
 
-        if (match.DateTime < DateTime.UtcNow.AddDays(1))
+        if (match.DateTime < DateTime.Now.AddDays(1))
         {
             throw new Exception("Match cannot be scheduled less than one day before its time.");
         }
@@ -134,7 +134,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
 
     public async Task<MatchDetailedInfo?> GetNextAsync()
     {
-        var match = await _entitySet.Include(m => m.Stadium).Include(m => m.Tickets).OrderBy(m => m.DateTime).FirstOrDefaultAsync().ConfigureAwait(false);
+        var match = await _entitySet.Include(m => m.Stadium).Include(m => m.Tickets).OrderBy(m => m.DateTime).FirstOrDefaultAsync(m => m.DateTime >= DateTime.Now).ConfigureAwait(false);
         if (match is null)
         {
             return null;

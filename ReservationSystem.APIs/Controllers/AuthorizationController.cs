@@ -188,7 +188,7 @@ public class AuthorizationController : BaseController<AuthorizationController>
             new Claim(ClaimTypes.Role, role)
         };
 
-        var expiry = DateTime.UtcNow.AddSeconds(_jwtBearerTokenSettings.ExpiryTimeInSeconds);
+        var expiry = DateTime.Now.AddSeconds(_jwtBearerTokenSettings.ExpiryTimeInSeconds);
         var symmetricSecurityKey = new SymmetricSecurityKey(_jwtBearerTokenSettings.KeyBytes);
         var tokenDescriptor = new SecurityTokenDescriptor
         {

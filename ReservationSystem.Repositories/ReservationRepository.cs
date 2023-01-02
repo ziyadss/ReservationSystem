@@ -60,7 +60,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             throw new Exception($"Reservation {reservationId} contains tickets for more than one match.");
         }
 
-        if (DateTime.UtcNow.AddDays(3) > match.DateTime)
+        if (DateTime.Now.AddDays(3) > match.DateTime)
         {
             throw new Exception($"Reservation {reservationId} cannot be cancelled because the match is in less than 3 days.");
         }
