@@ -122,6 +122,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
                 await UpdateTicket(ticket).ConfigureAwait(false);
             }
 
+            await RemoveAsync(reservation).ConfigureAwait(false);
             throw;
         }
 
