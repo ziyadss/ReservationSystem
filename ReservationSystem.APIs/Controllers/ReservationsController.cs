@@ -34,34 +34,17 @@ public class ReservationsController : BaseController<ReservationsController>
     /// <summary>
     /// Gets the current user's reservations.
     /// </summary>
-    /// <param name="skip">The index of the first reservation to return.</param>
-    /// <param name="take">The maximum number of reservation to return.</param>
-    /// <response code="200">Returns a <see cref="PaginationResult{TElement}"/> of <see cref="ReservationInfo"/> items.</response>
+    /// <response code="200">Returns a list of <see cref="ReservationInfo"/> items.</response>
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(PaginationResult<ReservationInfo>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetReservations([FromQuery] int skip = 0, [FromQuery] int take = 10)
+    public IActionResult GetReservations()
     {
         _logger.LogInformation($"Call to {nameof(ReservationsController)}.{nameof(GetReservations)}");
 
-        var userName = User.Identity!.Name!;
+        var reservations = _reservationRepository.Get(User.Identity!.Name!);
 
-        var reservations = _reservationRepository.Get(userName, skip, take);
-        var count = await _reservationRepository.CountAsync(userName).ConfigureAwait(false);
-
-        var done = skip + take >= count;
-        var next = done ? null : Url.ActionLink(values: new { skip = skip + take, take });
-
-        var result = new PaginationResult<ReservationInfo>
-        {
-            Items = reservations,
-            Skip = skip,
-            Take = take,
-            Total = count,
-            Next = next
-        };
-
-        return Ok(result);
+        return Ok(reservations);
     }
 
     /// <summary>

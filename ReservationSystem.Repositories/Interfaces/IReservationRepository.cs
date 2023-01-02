@@ -11,7 +11,7 @@ public interface IReservationRepository : IRepository<Reservation>
 
     Task Cancel(string userName, int reservationId);
 
-    IEnumerable<ReservationInfo> Get(string userName, int skip, int take);
+    IEnumerable<ReservationInfo> Get(string userName);
 
     Task<int> CountAsync(string userName);
 }

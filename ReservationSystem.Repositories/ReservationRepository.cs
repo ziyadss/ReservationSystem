@@ -68,7 +68,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
         await RemoveAsync(reservation).ConfigureAwait(false);
     }
 
-    public IEnumerable<ReservationInfo> Get(string userName, int skip, int take)
+    public IEnumerable<ReservationInfo> Get(string userName)
     {
         if (string.IsNullOrWhiteSpace(userName))
         {
@@ -79,8 +79,6 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             .Include(r => r.Tickets!)
             .ThenInclude(t => t.Match)
             .Where(r => r.HolderUserName == userName)
-            .Skip(skip)
-            .Take(take)
             .Select(r => new ReservationInfo(r, GetReservationMatch(r)));
     }
 
