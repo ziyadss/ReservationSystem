@@ -3,6 +3,10 @@
 	import { onMount } from 'svelte';
 	import Swal from 'sweetalert2';
 	import 'sweetalert2/src/sweetalert2.scss';
+	import seat from '../../../../lib/images/cinema-seat.svg';
+	import seatReserved from '../../../../lib/images/seat-reserved.svg';
+	import seatClicked from '../../../../lib/images/seat-clicked.svg';
+	import { browser } from '$app/environment';
 
 	const id = $page.params.id;
 	let match = {
@@ -39,16 +43,20 @@
 			}
 		]
 	};
+	let token: string;
+
 	// console.log(params.id);
 	onMount(async () => {
+		if (browser) {
+			token = window.localStorage.getItem('token')!;
+		}
 		const response = await fetch('https://localhost:7123/api/matches/' + id);
 		if (response.ok) {
 			match = await response.json();
-			console.log(match);
+			console.log('available seat: ' + JSON.stringify(match.availableSeats));
 			const response2 = await fetch('https://localhost:7123/api/stadiums/' + match.stadiumName);
 			if (response2.ok) {
 				stadium = await response2.json();
-				console.log(stadium);
 			} else {
 				await Swal.fire({
 					title: 'Error!',
@@ -68,26 +76,133 @@
 			window.location.replace('/schedule');
 		}
 	});
+	let ticketNumbersList: Array<string>;
+	console.log('available seats ely gyly: ' + JSON.stringify(match.availableSeats));
+	function reserveSeat(row: number, column: number) {
+		if (document.getElementById('seat_' + row + '_' + column) != null) {
+			let bikeImage = document.getElementById('seat_' + row + '_' + column) as HTMLImageElement;
+			if (ticketNumbersList == undefined) ticketNumbersList = new Array<string>();
+			let choosen: boolean =
+				ticketNumbersList.find(
+					(ticketNumber: string) =>
+						ticketNumber ==
+						match.availableSeats.find((seat) => seat.row == row && seat.column == column)
+							?.ticketNumber
+				) != undefined;
+			if (!choosen) {
+				console.log(row, column);
+				console.log('not chosen');
+				bikeImage!.src = seatClicked;
+				ticketNumbersList.push(
+					match.availableSeats.find((seat) => seat.row == row && seat.column == column)!
+						.ticketNumber
+				);
+			} else if (choosen) {
+				console.log('chosen');
+				bikeImage!.src = seat;
+				ticketNumbersList = ticketNumbersList.filter(
+					(ticketNumber: string) =>
+						ticketNumber !=
+						match.availableSeats.find((seat) => seat.row == row && seat.column == column)
+							?.ticketNumber
+				);
+			}
+		}
+	}
+	let creditCard: string = '';
+	let pin: string = '';
+	async function reservationRequest() {
+		const response = await fetch('https://localhost:7123/api/reservations/book', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + token
+			},
+			body: JSON.stringify({
+				ticketNumbers: ticketNumbersList
+			})
+		});
+		console.log(
+			'body sent:' +
+				JSON.stringify({
+					ticketNumbers: ticketNumbersList
+				})
+		);
+		if (response.ok) {
+			await Swal.fire({
+				title: 'Success!',
+				text: 'Your reservation has been made successfully',
+				icon: 'success',
+				confirmButtonText: 'OK'
+			});
+			window.location.replace('/profile');
+		} else {
+			await Swal.fire({
+				title: 'Error!',
+				text: 'Error in making reservation, please try again',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+		}
+	}
 </script>
 
 <div class="container" id="reservationPage">
 	<div class="row p-5">
 		<h1 class="pb-2 border-bottom">Reservation</h1>
 		<div class="row p-5 justify-content-center">
-			<div class="col p-3 shadow-sm rounded-5" style="background-color: #f7f7f7;">
-				<form>
+			<form on:submit={reservationRequest}>
+				<div class="col p-3 shadow-sm rounded-5" style="background-color: #f7f7f7;">
 					<h1 class="title">Step 1</h1>
 					<div class="form-outline py-2">
 						<label for="match">Pick your match</label>
-						<select
-							class="form-control form-control-lg"
-							id="name"
-							style="border-radius: 1rem;font-size: 16px;padding: .32rem .75rem;border: none; background-color:white;"
-							placeholder="Match"
+						<input
+							type="text"
+							class="form-control"
+							id="match"
+							value="{match.homeTeam} VS. {match.awayTeam} in {match.stadiumName}"
+							disabled
 						/>
 					</div>
-				</form>
-			</div>
+				</div>
+				<div
+					class="col p-3 my-5 shadow-sm rounded-5"
+					style="background-color: #f7f7f7; min-width:800px;"
+				>
+					<h1 class="title">Step 2</h1>
+					<p>Pick your seats</p>
+					{#each { length: stadium.rows } as _, i}
+						<div class="row">
+							{#each { length: stadium.columns } as _, j}
+								<div class="col">
+									{#if match.availableSeats.find((seat) => seat.row == i && seat.column == j)}
+										<!-- svelte-ignore a11y-click-events-have-key-events -->
+										<img
+											src={seat}
+											alt="seat"
+											class="seat_empty"
+											id="seat_{i}_{j}"
+											on:click={() => {
+												reserveSeat(i, j);
+											}}
+										/>
+									{:else}
+										<!-- svelte-ignore a11y-click-events-have-key-events -->
+										<img src={seatReserved} alt="seat" class="seat" />
+									{/if}
+								</div>
+							{/each}
+						</div>
+					{/each}
+				</div>
+				<div class="col p-3 shadow-sm rounded-5" style="background-color: #f7f7f7;">
+					<h1 class="title">Step 3</h1>
+					<div class="form-outline py-2">
+						<label for="match">Enter Your Credit Card Number</label>
+					</div>
+				</div>
+				<button class="btn" style="font-size: 1.5rem;" type="submit">Confirm</button>
+			</form>
 		</div>
 	</div>
 </div>
