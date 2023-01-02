@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReservationSystem.Data;
 using ReservationSystem.Data.Matches;
+using ReservationSystem.Data.Reservations;
 using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.Repositories.Interfaces;
 using System;
@@ -12,8 +13,11 @@ namespace ReservationSystem.Repositories;
 
 public class MatchRepository : BaseRepository<Match>, IMatchRepository
 {
+    private readonly DbSet<Ticket> _ticketsSet;
+
     public MatchRepository(ReservationSystemDbContext dbContext) : base(dbContext)
     {
+        _ticketsSet = _dbContext.Set<Ticket>();
     }
 
     public Task<Match?> FindAsync(int id)
@@ -54,6 +58,8 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         }
 
         await base.AddAsync(match).ConfigureAwait(false);
+
+        await UpdateTickets(match).ConfigureAwait(false);
     }
 
     public override async Task UpdateAsync(Match match)
@@ -84,6 +90,11 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         }
 
         await base.UpdateAsync(match).ConfigureAwait(false);
+
+        var tickets = await _ticketsSet.Where(t => t.MatchId == match.Id).ToListAsync().ConfigureAwait(false);
+        _ticketsSet.RemoveRange(tickets);
+
+        await UpdateTickets(match).ConfigureAwait(false);
     }
 
     public new IEnumerable<MatchInfo> Get(int skip, int take)
@@ -100,5 +111,27 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         }
 
         return new MatchDetailedInfo(match);
+    }
+
+    private Task UpdateTickets(Match match)
+    {
+        var stadium = match.Stadium!;
+        var tickets = new List<Ticket>(stadium.Rows * stadium.Columns);
+        for (int i = 1; i <= stadium.Rows; i++)
+        {
+            for (int j = 1; j <= stadium.Columns; j++)
+            {
+                var ticket = new Ticket
+                {
+                    MatchId = match.Id,
+                    Row = i,
+                    Column = j,
+                };
+
+                tickets.Add(ticket);
+            }
+        }
+
+        return _ticketsSet.AddRangeAsync(tickets);
     }
 }

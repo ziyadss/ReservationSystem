@@ -32,7 +32,7 @@ public class Match
     [ForeignKey(nameof(Stadium))]
     public required string StadiumName { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public required DateTime DateTime { get; set; }
 
     [StringLength(100, MinimumLength = 3)]
     public required string Referee { get; set; }

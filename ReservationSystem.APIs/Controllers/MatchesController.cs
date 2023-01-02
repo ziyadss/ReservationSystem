@@ -237,15 +237,6 @@ public class MatchesController : BaseController<MatchesController>
             throw new Exception($"Stadium {matchPayload.Stadium} does not exist.");
         }
 
-        var tickets = new List<Ticket>(stadium.Rows * stadium.Columns);
-        for (int i = 1; i <= stadium.Rows; i++)
-        {
-            for (int j = 1; j <= stadium.Columns; j++)
-            {
-                tickets.Add(new Ticket { Row = i, Column = j });
-            }
-        }
-
         return new Match
         {
             HomeTeamName = matchPayload.HomeTeam,
@@ -255,8 +246,7 @@ public class MatchesController : BaseController<MatchesController>
             Referee = matchPayload.Referee,
             FirstLinesman = matchPayload.FirstLinesman,
             SecondLinesman = matchPayload.SecondLinesman,
-            Stadium = stadium,
-            Tickets = tickets
+            Stadium = stadium
         };
     }
 

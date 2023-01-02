@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationSystem.Data;
 
@@ -11,9 +12,11 @@ using ReservationSystem.Data;
 namespace ReservationSystem.Data.Migrations
 {
     [DbContext(typeof(ReservationSystemDbContext))]
-    partial class ReservationSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230102020824_AddMatch")]
+    partial class AddMatch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1228,7 +1231,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "admin",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "10c3abc9-44df-4c12-9f2d-a69007dd61eb",
+                            ConcurrencyStamp = "2b7a833f-b0f1-4a80-8843-209916495e53",
                             Email = "admin@domain.com",
                             EmailConfirmed = false,
                             FirstName = "AdminFirstName",
@@ -1238,9 +1241,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "ADMIN@DOMAIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAELMgSY26QN/8nZYYcl70tiGLuRoYeEPFmrpgnNol0iw5fhra3YCngsP0Fe+VHfpRiQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMssPSPFZ7eF2QgQRmOSq02sCCEKSx/NIkf1hbB4vzeTsfneSnthMQ4FUlxJxEolHQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "47e9f505-356f-42e0-a517-277a1496f202",
+                            SecurityStamp = "ac1950f6-bcb8-49fd-b2e4-e489300d9ca5",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -1249,7 +1252,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "initial-manager",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "bedbde2f-4d30-42ba-b006-16f2226169ab",
+                            ConcurrencyStamp = "6ecb0b37-107a-458b-95c8-eccae12327b5",
                             Email = "initialmanager@domain.com",
                             EmailConfirmed = false,
                             FirstName = "ManagerFirstName",
@@ -1259,9 +1262,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
                             NormalizedUserName = "INITIALMANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN9NahKveMn7ayewvi/zvFQo/sDnQqJFN8U1Kt4JUNUXWdNUg5ZTwdnS2Q/MbguhgA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG4qQcoKX/4NYecsmxpoyg+BbkAxm0epaaBiMXOYSol/EQnlSHK5NkuNPn0G6kmPLA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0631d74f-02f8-4cbc-b386-326587eae6f8",
+                            SecurityStamp = "0db995cd-8f31-4c86-9d42-c1de2923e46c",
                             TwoFactorEnabled = false,
                             UserName = "initialManager"
                         },
@@ -1270,19 +1273,19 @@ namespace ReservationSystem.Data.Migrations
                             Id = "initial-user",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "234aea38-e004-41a5-ab6e-af5de1fc4159",
-                            Email = "initialuser@domain.com",
+                            ConcurrencyStamp = "5677558c-5eb9-40fc-b722-cf39bdceb4f4",
+                            Email = "initialmanager@domain.com",
                             EmailConfirmed = false,
                             FirstName = "UserFirstName",
                             Gender = 1,
                             LastName = "UserLastName",
                             LockoutEnabled = false,
                             Nationality = "eg",
-                            NormalizedEmail = "INITIALUSER@DOMAIN.COM",
+                            NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
                             NormalizedUserName = "INITIALUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE5havsovoSXAFCdra6u+HNNlxCYl4lydw7h3XcJe7IK3AR+g+mrcSHuRxzN82XP7g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEC8D1HOG1LJpXhlwGPt7WSho0OeIgqegxANItnExhFH2bYDPTH57NZ464EevIs2+WA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b0c3ccb1-9c17-4fb9-ba08-ca3f1a55c612",
+                            SecurityStamp = "cc9ca8f2-3cff-4fa9-99e8-fca1467b05f5",
                             TwoFactorEnabled = false,
                             UserName = "initialUser"
                         });
