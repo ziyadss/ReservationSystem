@@ -25,7 +25,6 @@
 				user
 			)
 		});
-		console.log(response);
 		if (response.ok) {
 			const data = await response.json();
 			if (browser) window.localStorage.setItem('token', data.token);
