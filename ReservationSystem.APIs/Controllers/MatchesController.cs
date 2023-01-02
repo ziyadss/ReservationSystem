@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReservationSystem.Data.Matches;
-using ReservationSystem.Data.Tickets;
+using ReservationSystem.Data.Reservations;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.Repositories.Interfaces;
@@ -268,7 +268,7 @@ public class MatchesController : BaseController<MatchesController>
             throw new Exception($"Stadium {matchPayload.Stadium} does not exist.");
         }
 
-        if (match.Tickets!.Any(t => !string.IsNullOrWhiteSpace(t.HolderUserName) && (t.Row > stadium.Rows || t.Column > stadium.Columns)))
+        if (match.Tickets!.Any(t => t.ReservationId is null && (t.Row > stadium.Rows || t.Column > stadium.Columns)))
         {
             throw new Exception("Cannot change stadium of a match with sold tickets outside bounds of new stadium.");
         }

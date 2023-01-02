@@ -1,4 +1,4 @@
-﻿namespace ReservationSystem.DataStructures.Tickets;
+﻿namespace ReservationSystem.DataStructures.Reservations;
 
 /// <summary>
 /// The payload for tickets.

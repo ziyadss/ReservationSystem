@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReservationSystem.Data.Matches;
 using ReservationSystem.Data.Stadiums;
-using ReservationSystem.Data.Tickets;
+using ReservationSystem.Data.Reservations;
 using ReservationSystem.Data.Users;
 using System;
 
@@ -18,6 +18,8 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
     // public DbSet<Team> Teams { get; set; }
 
     public required DbSet<Ticket> Tickets { get; set; }
+
+    public required DbSet<Reservation> Reservations { get; set; }
 
     public ReservationSystemDbContext(DbContextOptions<ReservationSystemDbContext> options) : base(options)
     {

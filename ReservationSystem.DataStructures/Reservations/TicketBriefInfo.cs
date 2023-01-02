@@ -1,6 +1,6 @@
-﻿using ReservationSystem.Data.Tickets;
+﻿using ReservationSystem.Data.Reservations;
 
-namespace ReservationSystem.DataStructures.Tickets;
+namespace ReservationSystem.DataStructures.Reservations;
 
 /// <summary>
 /// Brief information about a ticket.

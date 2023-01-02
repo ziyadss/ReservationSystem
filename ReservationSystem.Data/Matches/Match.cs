@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReservationSystem.Data.Reservations;
 using ReservationSystem.Data.Stadiums;
-using ReservationSystem.Data.Tickets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

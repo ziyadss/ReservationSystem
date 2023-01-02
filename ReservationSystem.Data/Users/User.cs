@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ReservationSystem.Data.Tickets;
+using ReservationSystem.Data.Reservations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,8 +28,8 @@ public class User : IdentityUser
     [StringLength(10, MinimumLength = 2)]
     public string? Nationality { get; set; }
 
-    [InverseProperty(nameof(Ticket.Holder))]
-    public List<Ticket>? Tickets { get; set; }
+    [InverseProperty(nameof(Reservation.Holder))]
+    public List<Reservation>? Reservations { get; set; }
 
 #pragma warning disable CS8618
     internal User()

@@ -20,6 +20,21 @@ public class MatchInfo : MatchBriefInfo
     public int EmptySeats { get; set; }
 
     /// <summary>
+    /// The match referee.
+    /// </summary>
+    public string Referee { get; set; }
+
+    /// <summary>
+    /// The first linesman.
+    /// </summary>
+    public string FirstLinesman { get; set; }
+
+    /// <summary>
+    /// The second linesman.
+    /// </summary>
+    public string SecondLinesman { get; set; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="MatchInfo"/>.
     /// </summary>
     /// <param name="match">The match.</param>
@@ -36,6 +51,9 @@ public class MatchInfo : MatchBriefInfo
         }
 
         StadiumCapacity = match.Stadium.Capacity;
-        EmptySeats = match.Tickets.Count(t => string.IsNullOrWhiteSpace(t.HolderUserName));
+        EmptySeats = match.Tickets.Count(t => t.ReservationId is null);
+        Referee = match.Referee;
+        FirstLinesman = match.FirstLinesman;
+        SecondLinesman = match.SecondLinesman;
     }
 }

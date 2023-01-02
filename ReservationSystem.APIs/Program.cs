@@ -79,7 +79,7 @@ public class Program
 
         builder.Services.AddScoped<IMatchRepository, MatchRepository>();
         builder.Services.AddScoped<IStadiumRepository, StadiumRepository>();
-        builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+        builder.Services.AddScoped<IStadiumRepository, StadiumRepository>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

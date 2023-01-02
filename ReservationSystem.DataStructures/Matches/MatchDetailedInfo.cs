@@ -1,5 +1,5 @@
 ﻿using ReservationSystem.Data.Matches;
-using ReservationSystem.DataStructures.Tickets;
+using ReservationSystem.DataStructures.Reservations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +11,6 @@ namespace ReservationSystem.DataStructures.Matches;
 /// </summary>
 public class MatchDetailedInfo : MatchInfo
 {
-    /// <summary>
-    /// The match referee.
-    /// </summary>
-    public string Referee { get; set; }
-
-    /// <summary>
-    /// The first linesman.
-    /// </summary>
-    public string FirstLinesman { get; set; }
-
-    /// <summary>
-    /// The second linesman.
-    /// </summary>
-    public string SecondLinesman { get; set; }
-
     /// <summary>
     /// The available seats.
     /// </summary>
@@ -42,9 +27,6 @@ public class MatchDetailedInfo : MatchInfo
             throw new ArgumentException($"{nameof(match)}.{nameof(match.Tickets)} may not be null to create an instance of {nameof(MatchDetailedInfo)}");
         }
 
-        Referee = match.Referee;
-        FirstLinesman = match.FirstLinesman;
-        SecondLinesman = match.SecondLinesman;
-        AvailableSeats = match.Tickets.Where(t => string.IsNullOrWhiteSpace(t.HolderUserName)).Select(t => new TicketBriefInfo(t));
+        AvailableSeats = match.Tickets.Where(t => t.ReservationId is null).Select(t => new TicketBriefInfo(t));
     }
 }
