@@ -90,7 +90,7 @@
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2" on:click={() => signOut()}>
+        <button type="button" class="btn btn-dark-outline px-3 me-2" style="box-shadow: none;" on:click={() => signOut()}>
             Logout
         </button>
       </div>
