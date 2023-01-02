@@ -16,10 +16,7 @@ public class StadiumRepository : BaseRepository<Stadium>, IStadiumRepository
     {
     }
 
-    public new IEnumerable<StadiumInfo> Get(int skip, int take)
-    {
-        return base.Get(skip, take).Select(s => new StadiumInfo(s));
-    }
+    public IEnumerable<StadiumInfo> Get() => _entitySet.Select(s => new StadiumInfo(s));
 
     public async Task<StadiumDetailedInfo?> GetAsync(string name)
     {
