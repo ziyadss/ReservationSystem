@@ -3,6 +3,7 @@
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
     import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
     let token = '';
     onMount(async () => {
@@ -104,14 +105,14 @@
 
                 if (response.ok) {
                     Swal.fire(
-                    'Authorized!',
+                    'Deleted!',
                     'The user has been deleted.',
                     'success'
                     );
                     await getUsers();
                 } else {
                     Swal.fire(
-                    'Authorized!',
+                    'Failed!',
                     'HTTP-Error: ' + response.status,
                     'error'
                     );
@@ -151,7 +152,7 @@
                     await getUsers();
                 } else {
                     Swal.fire(
-                    'Authorized!',
+                    'Failed!',
                     'HTTP-Error: ' + response.status,
                     'error'
                     );
