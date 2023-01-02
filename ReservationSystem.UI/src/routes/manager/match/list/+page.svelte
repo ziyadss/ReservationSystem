@@ -61,7 +61,7 @@
 		</div>
 		<div class="col-1" style="margin: auto auto auto 0;">
 			<button type="button" class="btn btn-link btn-sm" data-ripple-color="dark">
-				<a href="/manager/match/create"><i class="fas fa-plus" /></a>
+				<a href="/manager/match/create">Add match</a>
 			</button>
 		</div>
 	</div>

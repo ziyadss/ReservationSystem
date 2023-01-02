@@ -110,13 +110,13 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         return new MatchDetailedInfo(match);
     }
 
-    private Task UpdateTickets(Match match)
+    private async Task UpdateTickets(Match match)
     {
         var stadium = match.Stadium!;
         var tickets = new List<Ticket>(stadium.Rows * stadium.Columns);
-        for (int i = 1; i <= stadium.Rows; i++)
+        for (int i = 0; i < stadium.Rows; i++)
         {
-            for (int j = 1; j <= stadium.Columns; j++)
+            for (int j = 0; j < stadium.Columns; j++)
             {
                 var ticket = new Ticket
                 {
@@ -129,7 +129,8 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
             }
         }
 
-        return _ticketsSet.AddRangeAsync(tickets);
+        await _ticketsSet.AddRangeAsync(tickets).ConfigureAwait(false);
+        await _dbContext.SaveChangesAsync().ConfigureAwait(false);
     }
 
     public async Task<MatchDetailedInfo?> GetNextAsync()

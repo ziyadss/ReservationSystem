@@ -142,6 +142,19 @@
 	let changePassword = false;
 
 	async function cancelRequest(id: number) {
+		const selected = reservationsList.find((x) => x.id == id);
+		if (selected) {
+			var date = new Date();
+			date.setDate(date.getDate() + 3);
+			if (new Date(selected.match.time) < date) {
+				await Swal.fire(
+					'Sorry!',
+					'You cannot cancel the reservation less than 3 days before the match',
+					'warning'
+				);
+				return;
+			}
+		}
 		const response = await fetch('https://localhost:7123/api/reservations/' + id + '/cancel', {
 			method: 'POST',
 			headers: {

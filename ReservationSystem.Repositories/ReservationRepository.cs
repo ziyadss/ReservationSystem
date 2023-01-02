@@ -116,7 +116,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             await UpdateAsync(reservation).ConfigureAwait(false);
 
             var match = GetReservationMatch(reservation);
-            if (match.DateTime > DateTime.UtcNow.AddHours(1))
+            if (match.DateTime < DateTime.UtcNow.AddHours(1))
             {
                 throw new Exception($"Cannot book ticket for match after it starts or ends.");
             }
