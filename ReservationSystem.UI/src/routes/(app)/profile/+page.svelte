@@ -1,8 +1,9 @@
-<script lang="js">
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import Swal from 'sweetalert2';
 	import 'sweetalert2/src/sweetalert2.scss';
+	import { identity } from 'svelte/internal';
 
 	//check if logged in before loading page and get user data
 	let token = '';
@@ -29,6 +30,26 @@
 		gender: '',
 		nationality: ''
 	};
+	let reservationsList = [
+		{
+			id: 1,
+			match: {
+				id: 2,
+				homeTeam: 'Spain',
+				awayTeam: 'Germany',
+				stadium: 'Ahmad bin Ali Stadium',
+				time: '2023-02-02T09:00:00'
+			},
+			tickets: [
+				{
+					ticketNumber: '2-5-5',
+					row: 5,
+					column: 5
+				}
+			]
+		}
+	];
+
 	onMount(async () => {
 		let _token;
 		if (browser) {
@@ -54,6 +75,17 @@
 				profilePayload.gender = user.gender;
 				profilePayload.nationality = user.nationality;
 			}
+			const response2 = await fetch('https://localhost:7123/api/reservations', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + token
+				}
+			});
+			if (response2.ok) {
+				reservationsList = await response2.json();
+				console.log(JSON.stringify(reservationsList));
+			}
 		} else {
 			window.location.replace('/login');
 		}
@@ -61,11 +93,7 @@
 
 	async function changePasswordRequest() {
 		if (password != confirmpassword) {
-            Swal.fire(
-            'Invalid!',
-            'Passwords do not match.',
-            'error'
-            );
+			await Swal.fire('Invalid!', 'Passwords do not match.', 'error');
 			return;
 		} else {
 			passwordPayload.newpassword = confirmpassword;
@@ -79,18 +107,10 @@
 			body: JSON.stringify(passwordPayload)
 		});
 		if (respone.ok) {
-            Swal.fire(
-            'Password Changed!',
-            'Password changed successfully.',
-            'success'
-            );
+			await Swal.fire('Password Changed!', 'Password changed successfully.', 'success');
 			window.location.replace('/profile');
 		} else {
-            Swal.fire(
-            'Failed!',
-            'Error changing passwords.',
-            'error'
-            );
+			await Swal.fire('Failed!', 'Error changing passwords.', 'error');
 		}
 	}
 
@@ -104,18 +124,10 @@
 			body: JSON.stringify(profilePayload)
 		});
 		if (response.ok) {
-            Swal.fire(
-            'Profile Updated!',
-            'Profile updated successfully.',
-            'success'
-            );
+			await Swal.fire('Profile Updated!', 'Profile updated successfully.', 'success');
 			window.location.replace('/profile');
 		} else {
-            Swal.fire(
-            'Failed!',
-            'Error updating profile.',
-            'error'
-            );
+			await Swal.fire('Failed!', 'Error updating profile.', 'error');
 		}
 	}
 
@@ -124,10 +136,25 @@
 		profilePayload.birthdate = document.getElementById('dateEditInput')?.value;
 		console.log(profilePayload.birthdate);
 	}
-
 	let profileDetails = true;
 	let editProfile = false;
 	let changePassword = false;
+
+	async function cancelRequest(id: number) {
+		const response = await fetch('https://localhost:7123/api/reservations/' + id + '/cancel', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + token
+			}
+		});
+		if (response.ok) {
+			await Swal.fire('Reservation Cancelled!', 'Reservation cancelled successfully.', 'success');
+			window.location.reload();
+		} else {
+			await Swal.fire('Failed!', 'Error cancelling reservation. Try again.', 'error');
+		}
+	}
 </script>
 
 <div class="container" id="profile">
@@ -381,7 +408,60 @@
 						role="tabpanel"
 						aria-labelledby="settings-tab"
 					>
-						...
+						{#each reservationsList as res, i}
+							<div class="row my-5 mx-3">
+								<div class="col-md-9  p-4 shadow-sm rounded-5" style="background-color:#f7f7f7;">
+									<form
+										on:submit={async () => {
+											await Swal.fire({
+												title: 'Are you sure?',
+												text: "You won't be able to revert this!",
+												icon: 'warning',
+												confirmButtonText: 'Yes, cancel it!',
+												showCancelButton: true
+											}).then(async () => {
+												await cancelRequest(res.id);
+											});
+										}}
+									>
+										<div class="row p-3 border-bottom">
+											<div class="col border-right"><h2>Reservation {i + 1}</h2></div>
+										</div>
+										<div class="row p-3 border-bottom">
+											<div class="col">
+												<h3>Match</h3>
+											</div>
+											<div class="col">
+												<h4>{res.match.homeTeam} VS. {res.match.awayTeam}</h4>
+											</div>
+										</div>
+										<div class="row p-3 border-bottom">
+											<div class="col">
+												<h3>Stadium</h3>
+											</div>
+											<div class="col">
+												<h4>{res.match.stadium}</h4>
+											</div>
+										</div>
+										<div class="row p-3 border-bottom">
+											<div class="col">
+												<h3>Time</h3>
+											</div>
+											<div class="col">
+												<h4>{new Date(res.match.time)}</h4>
+											</div>
+										</div>
+										<div class="row p-3">
+											<div class="col">
+												<button class="btn " style="font-size: 1.2rem;" type="submit"
+													>Cancel Reservation</button
+												>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						{/each}
 					</div>
 				</div>
 			</div>
