@@ -125,32 +125,43 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
             new Stadium { Name = "Khalifa International Stadium", Rows = 4, Columns = 8 },
             new Stadium { Name = "Ahmad bin Ali Stadium", Rows = 8, Columns = 16 },
             new Stadium { Name = "Education City Stadium", Rows = 32, Columns = 64 },
-            new Stadium { Name = "Al Thumama Stadium", Rows = 64, Columns = 128 },
-            new Stadium { Name = "Stadium 974", Rows = 128, Columns = 256 },
-            new Stadium { Name = "Al Janoub Stadium", Rows = 256, Columns = 512 }
+            new Stadium { Name = "Al Thumama Stadium", Rows = 64, Columns = 128 }
         };
 
         modelBuilder.Entity<Stadium>().HasData(stadiums);
 
-        var matchIdToStadiumIndex = new Dictionary<int, int>
+        var seedingTeams = new[]
         {
-            [1] = 3
+            "Belgium",
+            "Croatia",
+            "France",
+            "Germany",
+            "Netherlands",
+            "Portugal",
+            "Spain"
         };
 
-        var matches = new Match[]
-{
-            new Match
+        var matchIdToStadiumIndex = new Dictionary<int, int>();
+        var matches = new List<Match>();
+
+        for (int i = 0; i < 6; i++)
+        {
+            var id = i + 1;
+            int stadiumIndex = i * 3 % stadiums.Length;
+            matchIdToStadiumIndex[id] = stadiumIndex;
+            var match = new Match
             {
-                Id = 1,
-                HomeTeamName = "France",
-                AwayTeamName = "Spain",
-                StadiumName = stadiums[matchIdToStadiumIndex[1]].Name,
-                DateTime = new DateTime(2023, 2, 01, 20, 0, 0),
-                Referee = "Referee 1",
-                FirstLinesman = "First Linesman 1",
-                SecondLinesman = "Second Linesman 1"
-            }
-        };
+                Id = id,
+                HomeTeamName = seedingTeams[i * 13 % seedingTeams.Length],
+                AwayTeamName = seedingTeams[(i * 11 + 7) % seedingTeams.Length],
+                StadiumName = stadiums[stadiumIndex].Name,
+                DateTime = new DateTime(2023, i % 12 + 1, i % 29 + 1, i % 14 + 8, 0, 0),
+                Referee = "Referee " + ((i % 4) + 1),
+                FirstLinesman = "First Linesman " + ((i % 3) + 1),
+                SecondLinesman = "Second Linesman " + ((i % 2) + 1)
+            };
+            matches.Add(match);
+        }
 
         modelBuilder.Entity<Match>().HasData(matches);
 
