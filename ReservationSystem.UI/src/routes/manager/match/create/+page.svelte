@@ -24,8 +24,9 @@
 				window.location.replace('/admin/list');
 			}
 			token = _token;
-            getStadiums();
+
 		}
+        await getStadiums();
 	});
 
 
@@ -49,9 +50,9 @@
         });
         if (response.ok) {
             const data = await response.json();
-            stadiums = data.items;
+            stadiums = data;
         }
-    }
+    };
 
     async function createMatch() {
         if (match.time < new Date()) {
@@ -75,6 +76,7 @@
         });
         if (response.ok) {
             const data = await response.json();
+			alert('Success editing match');
             window.location.replace('/manager/match/list');
         }
         else {
@@ -95,12 +97,12 @@
             <h4>Add New Match</h4>
         </div>
         <div class="text-danger"></div>
-        <form on:submit|preventDefault={createMatch} id="add-match-form" use:enhance>
+        <form on:submit|preventDefault={createMatch} id="add-match-form">
             <div class="card-body">
                 <div class="form-row row">
                     <div class="form-group col-6">
                         <label for="homeTeam" class="col-form-label">Home Team</label>
-                        <select class="form-control" name="homeTeam" bind:value={match.homeTeam}>
+                        <select class="form-control" name="homeTeam" bind:value={match.homeTeam} required>
                             {#each participants as participant}
                                 <option value={participant.name}>{participant.name}</option>
                             {/each}
@@ -108,7 +110,7 @@
                     </div>
                     <div class="form-group col-6">
                         <label for="awayTeam" class="col-form-label">Away Team</label>
-                        <select class="form-control" name="awayTeam" bind:value={match.awayTeam}>
+                        <select class="form-control" name="awayTeam" bind:value={match.awayTeam} required>
                             {#each participants as participant}
                                 <option value={participant.name}>{participant.name}</option>
                             {/each}
@@ -124,7 +126,7 @@
                 <div class="form-row row">
                     <div class="form-group col">
                         <label for="stadium" class="col-form-label">Stadium</label>
-                        <select class="form-control" bind:value={match.stadium}>
+                        <select class="form-control" bind:value={match.stadium} required>
                             {#each stadiums as stadium}
                                 <option value={stadium.name}>{stadium.name}</option>
                             {/each}
@@ -132,7 +134,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="referee" class="col-form-label">Referee</label>
-                        <input type="text" class="form-control" bind:value={match.referee}/>
+                        <input type="text" class="form-control" bind:value={match.referee} required/>
                     </div>
                 </div>
                 <div class="form-row row">
