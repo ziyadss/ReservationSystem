@@ -13,7 +13,7 @@ public class Ticket
 {
     [Required]
     [ForeignKey(nameof(Match))]
-    public int MatchId { get; set; }
+    public required int MatchId { get; set; }
 
     [InverseProperty(nameof(Matches.Match.Tickets))]
     public Match? Match { get; set; }

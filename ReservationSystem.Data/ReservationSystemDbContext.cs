@@ -6,6 +6,8 @@ using ReservationSystem.Data.Stadiums;
 using ReservationSystem.Data.Reservations;
 using ReservationSystem.Data.Users;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ReservationSystem.Data;
 
@@ -38,7 +40,7 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
 
         SeedInitialUsers(modelBuilder);
 
-        SeedStadiums(modelBuilder);
+        SeedData(modelBuilder);
     }
 
     private static void SeedInitialUsers(ModelBuilder modelBuilder)
@@ -114,7 +116,7 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         modelBuilder.Entity<IdentityUserRole<string>>().HasData(adminRole, initialManagerRole, initialUserRole);
     }
 
-    public static void SeedStadiums(ModelBuilder modelBuilder)
+    public static void SeedData(ModelBuilder modelBuilder)
     {
         var stadiums = new Stadium[]
         {
@@ -129,5 +131,48 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         };
 
         modelBuilder.Entity<Stadium>().HasData(stadiums);
+
+        var matchIdToStadiumIndex = new Dictionary<int, int>
+        {
+            [-1] = 3
+        };
+
+        var matches = new Match[]
+{
+            new Match
+            {
+                Id = -1,
+                HomeTeamName = "France",
+                AwayTeamName = "Spain",
+                StadiumName = stadiums[matchIdToStadiumIndex[-1]].Name,
+                DateTime = new DateTime(2023, 2, 01, 20, 0, 0),
+                Referee = "Referee 1",
+                FirstLinesman = "First Linesman 1",
+                SecondLinesman = "Second Linesman 1"
+            }
+        };
+
+        modelBuilder.Entity<Match>().HasData(matches);
+
+        var tickets = matches.SelectMany(match =>
+        {
+            var stadium = stadiums[matchIdToStadiumIndex[match.Id]];
+            var tickets = new List<Ticket>();
+            for (int i = 0; i < stadium.Rows; i++)
+            {
+                for (int j = 0; j < stadium.Columns; j++)
+                {
+                    tickets.Add(new Ticket
+                    {
+                        MatchId = match.Id,
+                        Row = i,
+                        Column = j
+                    });
+                }
+            }
+            return tickets;
+        });
+
+        modelBuilder.Entity<Ticket>().HasData(tickets);
     }
 }
