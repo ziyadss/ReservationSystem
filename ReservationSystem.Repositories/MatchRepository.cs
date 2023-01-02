@@ -20,10 +20,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         _ticketsSet = _dbContext.Set<Ticket>();
     }
 
-    public Task<Match?> FindAsync(int id)
-    {
-        return _entitySet.Include(m => m.Tickets).SingleOrDefaultAsync(m => m.Id == id);
-    }
+    public Task<Match?> FindAsync(int id) => _entitySet.Include(m => m.Tickets).SingleOrDefaultAsync(m => m.Id == id);
 
     public override async Task AddAsync(Match match)
     {
@@ -97,10 +94,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         await UpdateTickets(match).ConfigureAwait(false);
     }
 
-    public new IEnumerable<MatchInfo> Get(int skip, int take)
-    {
-        return base.Get(skip, take).Include(m => m.Stadium).Include(m => m.Tickets).Select(m => new MatchInfo(m));
-    }
+    public new IEnumerable<MatchInfo> Get(int skip, int take) => base.Get(skip, take).Include(m => m.Stadium).Include(m => m.Tickets).Select(m => new MatchInfo(m));
 
     public async Task<MatchDetailedInfo?> GetAsync(int id)
     {
