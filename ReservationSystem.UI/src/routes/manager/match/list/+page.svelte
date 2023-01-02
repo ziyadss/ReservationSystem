@@ -68,6 +68,7 @@
                 <th scope="col">Referee</th>
                 <th scope="col">First Linesman</th>
                 <th scope="col">Second Linesman</th>
+                <th scope="col">Available Seats</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -88,6 +89,7 @@
                     <td>{match.referee}</td>
                     <td>{match.firstLinesman}</td>
                     <td>{match.secondLinesman}</td>
+                    <td>{match.emptySeats}/{match.stadiumCapacity}</td>
                     <td>
                         <a class="btn btn-danger" href="/manager/match/update/{match.id}">Edit</a>
                     </td>
