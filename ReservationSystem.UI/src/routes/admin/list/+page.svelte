@@ -94,11 +94,6 @@
         confirmButtonText: 'Yes, delete it!'
         }).then(async (result: Swal.SweetAlertResult) => {
             if (result.value) {
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                );
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'DELETE',
                     headers: {
@@ -108,10 +103,18 @@
                 });
 
                 if (response.ok) {
-                    alert("User deleted successfully");
+                    Swal.fire(
+                    'Authorized!',
+                    'The user has been deleted.',
+                    'success'
+                    );
                     await getUsers();
                 } else {
-                    alert("HTTP-Error: " + response.status);
+                    Swal.fire(
+                    'Authorized!',
+                    'HTTP-Error: ' + response.status,
+                    'error'
+                    );
                 }
             }
         });
@@ -128,12 +131,6 @@
         confirmButtonText: 'Yes, authorize it!'
         }).then(async (result: Swal.SweetAlertResult) => {
             if (result.value) {
-                Swal.fire(
-                'Authorized!',
-                'The user has been authorized.',
-                'success'
-                );
-                // Make PATCH request to API to update user's role to "Manager" here
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'PATCH',
                     headers: {
@@ -146,10 +143,18 @@
                 });
 
                 if (response.ok) {
-                    alert("User authorized successfully");
+                    Swal.fire(
+                    'Authorized!',
+                    'The user has been authorized.',
+                    'success'
+                    );
                     await getUsers();
                 } else {
-                    alert("HTTP-Error: " + response.status);
+                    Swal.fire(
+                    'Authorized!',
+                    'HTTP-Error: ' + response.status,
+                    'error'
+                    );
                 }
             }
         });
