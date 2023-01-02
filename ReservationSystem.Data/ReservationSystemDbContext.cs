@@ -134,17 +134,17 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
 
         var matchIdToStadiumIndex = new Dictionary<int, int>
         {
-            [-1] = 3
+            [1] = 3
         };
 
         var matches = new Match[]
 {
             new Match
             {
-                Id = -1,
+                Id = 1,
                 HomeTeamName = "France",
                 AwayTeamName = "Spain",
-                StadiumName = stadiums[matchIdToStadiumIndex[-1]].Name,
+                StadiumName = stadiums[matchIdToStadiumIndex[1]].Name,
                 DateTime = new DateTime(2023, 2, 01, 20, 0, 0),
                 Referee = "Referee 1",
                 FirstLinesman = "First Linesman 1",
