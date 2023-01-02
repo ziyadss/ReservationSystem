@@ -77,7 +77,7 @@
             const error = await response.json();
             Swal.fire(
             'Failed!',
-            'Error adding stadium: ' + error.InvalidMessage,
+            'Error adding stadium',
             'success'
             );
             return;
