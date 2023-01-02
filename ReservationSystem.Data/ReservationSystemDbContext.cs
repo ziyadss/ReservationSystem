@@ -71,8 +71,23 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
             Nationality = "eg"
         };
         initialManager.PasswordHash = hasher.HashPassword(initialManager, "manager");
+
+        var initialUser = new User
+        {
+            Id = "initial-user",
+            UserName = "initialUser",
+            NormalizedUserName = "INITIALUSER",
+            Email = "initialmanager@domain.com",
+            NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
+            FirstName = "UserFirstName",
+            LastName = "UserLastName",
+            Birthdate = new DateTime(2000, 5, 12),
+            Gender = Gender.Unspecified,
+            Nationality = "eg"
+        };
+        initialUser.PasswordHash = hasher.HashPassword(initialUser, "user");
         
-        modelBuilder.Entity<User>().HasData(admin, initialManager);
+        modelBuilder.Entity<User>().HasData(admin, initialManager, initialUser);
 
         modelBuilder.Entity<Role>().HasData(Role.Roles);
 
@@ -88,6 +103,12 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
             UserId = initialManager.Id
         };
 
-        modelBuilder.Entity<IdentityUserRole<string>>().HasData(adminRole, initialManagerRole);
+        var initialUserRole = new IdentityUserRole<string>
+        {
+            RoleId = Role.UserRole.Id,
+            UserId = initialUser.Id
+        };
+
+        modelBuilder.Entity<IdentityUserRole<string>>().HasData(adminRole, initialManagerRole, initialUserRole);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationSystem.Data;
 
@@ -11,9 +12,11 @@ using ReservationSystem.Data;
 namespace ReservationSystem.Data.Migrations
 {
     [DbContext(typeof(ReservationSystemDbContext))]
-    partial class ReservationSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230102005632_RequireUsernameReservation")]
+    partial class RequireUsernameReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,11 +121,6 @@ namespace ReservationSystem.Data.Migrations
                         {
                             UserId = "initial-manager",
                             RoleId = "Manager"
-                        },
-                        new
-                        {
-                            UserId = "initial-user",
-                            RoleId = "User"
                         });
                 });
 
@@ -395,7 +393,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "admin",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "fd8d299c-5306-4e24-93f1-d5ee4c88da4b",
+                            ConcurrencyStamp = "21aabd6d-a323-41e1-89b6-6acb1f8c1231",
                             Email = "admin@domain.com",
                             EmailConfirmed = false,
                             FirstName = "AdminFirstName",
@@ -405,9 +403,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "ADMIN@DOMAIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKs74etYQGS47szG6Gmb7QM9KTQRWxnGiHepj1+ULXyC04mlM+2d1FrPdLC4sp7Fyg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEudTJhvQDjVytqGgetV9fqVYgYK0gSVKnKtfIQHeX3gz0c2Rw58sZVo5marGJuYNw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c997c594-13ab-4353-996b-1c0d0d8253c4",
+                            SecurityStamp = "1f93ab89-ab6d-413a-b8eb-21701ff808a9",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -416,7 +414,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "initial-manager",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "7b69d58e-cb4c-4980-9c4c-6269367f6992",
+                            ConcurrencyStamp = "7ba7413d-6ed3-4a27-b3e9-ef42b8802fb1",
                             Email = "initialmanager@domain.com",
                             EmailConfirmed = false,
                             FirstName = "ManagerFirstName",
@@ -426,32 +424,11 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
                             NormalizedUserName = "INITIALMANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJNPaO6Zm1cqIie3JF+9/7lWOTMPql8/Mmjzq1bLtYzn/f8ZBYXnD/WCJpjT9+3xqA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL+0EQbXyczTmc9ET6PCiBItHYAVndFvpfNPUON+KjGqpexKsA8cfnsFCx7BsWcMYQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5de2f2bf-cd73-47d6-a604-803dbda3318e",
+                            SecurityStamp = "d6bdea21-6abb-44e5-b85d-1e2f2d0a41ed",
                             TwoFactorEnabled = false,
                             UserName = "initialManager"
-                        },
-                        new
-                        {
-                            Id = "initial-user",
-                            AccessFailedCount = 0,
-                            Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "8a9a506b-f8ea-4ea5-8e57-d93619821996",
-                            Email = "initialmanager@domain.com",
-                            EmailConfirmed = false,
-                            FirstName = "UserFirstName",
-                            Gender = 1,
-                            LastName = "UserLastName",
-                            LockoutEnabled = false,
-                            Nationality = "eg",
-                            NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
-                            NormalizedUserName = "INITIALUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAED76nfq2wylGYsrRjwvrP30RKPbQi4cn+o96/yEBQPOpxiNdL6j4scbJCP7dAZ/urw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "8d1a4376-8974-4920-a2f5-b6a7234e476e",
-                            TwoFactorEnabled = false,
-                            UserName = "initialUser"
                         });
                 });
 
