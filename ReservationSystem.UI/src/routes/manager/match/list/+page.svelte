@@ -89,7 +89,7 @@
                     <td>{match.firstLinesman}</td>
                     <td>{match.secondLinesman}</td>
                     <td>
-                        <button class="btn btn-danger">Edit</button>
+                        <a class="btn btn-danger" href="/manager/match/update/{match.id}">Edit</a>
                     </td>
                 </tr>
             {/each}
