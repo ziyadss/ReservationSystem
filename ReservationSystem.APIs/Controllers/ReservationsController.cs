@@ -37,7 +37,7 @@ public class ReservationsController : BaseController<ReservationsController>
     /// <response code="200">Returns a list of <see cref="ReservationInfo"/> items.</response>
     [HttpGet]
     [Authorize]
-    [ProducesResponseType(typeof(PaginationResult<ReservationInfo>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<ReservationInfo>), StatusCodes.Status200OK)]
     public IActionResult GetReservations()
     {
         _logger.LogInformation($"Call to {nameof(ReservationsController)}.{nameof(GetReservations)}");
