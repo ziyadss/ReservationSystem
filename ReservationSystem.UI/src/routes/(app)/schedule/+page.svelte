@@ -42,6 +42,15 @@
 	};
 
 	async function navigateBook(id: number) {
+		const selected = matches.find(x => x.id == id);		
+
+		if (selected) {
+			if (new Date(selected.time) < new Date()) {
+				await Swal.fire('Sorry!', 'Reservation is closed for this match', 'info');
+				return;
+			}
+		}
+
 		let _token;
 		if (browser) {
 			_token = window.localStorage.getItem('token');

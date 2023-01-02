@@ -117,6 +117,36 @@
 	}
 
 	async function reservationRequest() {
+		if (isNaN(creditcardInfo.cardNumber) && isNaN(creditcardInfo.cvv)) {
+			await Swal.fire({
+				title: 'Error!',
+				text: 'Credit card info must all be numeric',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+			return;
+		}
+
+		if (creditcardInfo.cardNumber.length < 16 || creditcardInfo.cardNumber.length > 16) {
+			await Swal.fire({
+				title: 'Error!',
+				text: 'Credit card number must be 16 characters long',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+			return;
+		}
+
+		if (creditcardInfo.cvv.length < 3 || creditcardInfo.cvv.length > 3) {
+			await Swal.fire({
+				title: 'Error!',
+				text: 'CVV must be 3 characters long',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+			return;
+		}
+
 		const response = await fetch('https://localhost:7123/api/reservations/book', {
 			method: 'POST',
 			headers: {
