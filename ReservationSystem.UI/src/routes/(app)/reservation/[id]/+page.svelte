@@ -28,6 +28,12 @@
 			}
 		]
 	};
+
+	let creditcardInfo = {
+		cardNumber: '',
+		cvv: ''
+	};
+
 	let stadium = {
 		name: 'string',
 		capacity: 0,
@@ -197,8 +203,12 @@
 				<div class="col p-3 shadow-sm rounded-5" style="background-color: #f7f7f7;">
 					<h1 class="title">Step 3</h1>
 					<div class="form-outline py-2">
-						<label for="match">Enter Your Credit Card Number</label>
-						<input class="input-element" />
+						<label for="match" class="input-title" >Enter Your Credit Card Number:</label>
+						<input type="text" class="input-element form-control form-control-lg" bind:value={creditcardInfo.cardNumber} />
+					</div>
+					<div class="form-outline py-2">
+						<label for="match" class="input-title" >Enter CVV:</label>
+						<input type="text" class="form-control form-control-lg input-element" bind:value={creditcardInfo.cvv} />
 					</div>
 				</div>
 				<button class="btn" style="font-size: 1.5rem;" type="submit">Confirm</button>
