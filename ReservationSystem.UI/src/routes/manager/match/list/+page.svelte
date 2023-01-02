@@ -2,6 +2,8 @@
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
 	import { redirect } from "@sveltejs/kit";
+    import Swal from 'sweetalert2';
+    import 'sweetalert2/src/sweetalert2.scss'
 
 	let token = '';
     let matches = [];
@@ -21,18 +23,23 @@
 				window.location.replace('/admin/list');
 			}
 			token = _token;
-			const response = await fetch('https://localhost:7123/api/matches', {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			});
-			if (response.ok) {
-                const data = await response.json();
-                matches = data.items;
-			}
+            await getMatches();
 		}
 	});
+
+    async function getMatches() {
+        const response = await fetch('https://localhost:7123/api/matches', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            matches = data.items;
+        }
+    }
+
     const tempMatches = [
         {
             homeTeam: "Argentine",
@@ -47,9 +54,10 @@
 </script>
 
 <svelte:head>
-    <title>WC22 Match List</title>
+    <title>Match List</title>
 </svelte:head>
 
+<!--
 <div class="d-flex flex-row row container mx-2 my-2">
     <div class="col-6 px-5">
         <h2>Match List</h2>
@@ -65,8 +73,8 @@
     <div class="col-1">
     </div>
     <div class="col-1 my-2">
-        <button type="button" class="align-items-center btn btn-primary btn-sm" data-ripple-color="dark">
-            <i class="fas fa-plus"></i>
+        <button type="button" class="align-items-center btn btn-link btn-sm" data-ripple-color="dark">
+            <a href='/manager/match/create'><i class="fas fa-plus"></i></a>
         </button>
     </div>
 </div>
@@ -112,6 +120,57 @@
                         <button type="button" class="btn btn-danger btn-sm px-3" data-ripple-color="dark">
                         <i class="fas fa-times"></i>
                         </button>
+                    </td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+</div> -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+            <h1>Match List</h1>
+        </div>
+        <div class="col-1" style="margin: auto auto auto 0;">
+            <button type="button" class="btn btn-link btn-sm" data-ripple-color="dark">
+                <a href='/manager/match/create'><i class="fas fa-plus"></i></a>
+            </button>
+        </div>
+    </div>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Home Team</th>
+                <th scope="col">Away Team</th>
+                <th scope="col">Stadium</th>
+                <th scope="col">Date</th>
+                <th scope="col">Referee</th>
+                <th scope="col">First Linesman</th>
+                <th scope="col">Second Linesman</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {#each tempMatches as match, i}
+                <tr>
+                    <th scope="row">{i + 1}</th>
+                    <td>{match.homeTeam}</td>
+                    <td>{match.awayTeam}</td>
+                    <td>{match.stadiumName}</td>
+                    <td>{new Date(match.time).toLocaleTimeString([], {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    })}</td>
+                    <td>{match.referee}</td>
+                    <td>{match.firstLinesMan}</td>
+                    <td>{match.secondLinesMan}</td>
+                    <td>
+                        <button class="btn btn-danger">Edit</button>
                     </td>
                 </tr>
             {/each}

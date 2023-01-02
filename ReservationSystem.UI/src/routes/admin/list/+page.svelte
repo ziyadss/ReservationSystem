@@ -3,6 +3,7 @@
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
     import Swal from 'sweetalert2';
+    import 'sweetalert2/src/sweetalert2.scss'
 
     let token = '';
     onMount(async () => {
@@ -94,11 +95,6 @@
         confirmButtonText: 'Yes, delete it!'
         }).then(async (result: Swal.SweetAlertResult) => {
             if (result.value) {
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                );
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'DELETE',
                     headers: {
@@ -108,10 +104,18 @@
                 });
 
                 if (response.ok) {
-                    alert("User deleted successfully");
+                    Swal.fire(
+                    'Deleted!',
+                    'The user has been deleted.',
+                    'success'
+                    );
                     await getUsers();
                 } else {
-                    alert("HTTP-Error: " + response.status);
+                    Swal.fire(
+                    'Failed!',
+                    'HTTP-Error: ' + response.status,
+                    'error'
+                    );
                 }
             }
         });
@@ -128,12 +132,6 @@
         confirmButtonText: 'Yes, authorize it!'
         }).then(async (result: Swal.SweetAlertResult) => {
             if (result.value) {
-                Swal.fire(
-                'Authorized!',
-                'The user has been authorized.',
-                'success'
-                );
-                // Make PATCH request to API to update user's role to "Manager" here
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'PATCH',
                     headers: {
@@ -146,10 +144,18 @@
                 });
 
                 if (response.ok) {
-                    alert("User authorized successfully");
+                    Swal.fire(
+                    'Authorized!',
+                    'The user has been authorized.',
+                    'success'
+                    );
                     await getUsers();
                 } else {
-                    alert("HTTP-Error: " + response.status);
+                    Swal.fire(
+                    'Failed!',
+                    'HTTP-Error: ' + response.status,
+                    'error'
+                    );
                 }
             }
         });
