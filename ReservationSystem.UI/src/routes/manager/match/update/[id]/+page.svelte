@@ -85,8 +85,8 @@
             window.location.replace('/manager/match/list');
         }
         else {
-            console.log(response.json());
-            alert('Error creating match:');
+			const error = await response.json();
+            alert(error.InvalidMatch);
             return;
         }
 	}
@@ -99,7 +99,7 @@
 <div class="container justify-content-center p-3">
     <div class="card" style="width=18rem">
         <div class="card-header bg-dark text-white">
-            <h4>Add New Match</h4>
+            <h4>Update Match</h4>
         </div>
         <div class="text-danger"></div>
         <form on:submit|preventDefault={updateMatch} id="add-match-form">
