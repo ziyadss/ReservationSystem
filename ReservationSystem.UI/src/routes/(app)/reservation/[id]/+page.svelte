@@ -13,7 +13,7 @@
 		id: 0,
 		homeTeam: 'string',
 		awayTeam: 'string',
-		stadiumName: 'string',
+		stadium: 'string',
 		time: '2023-01-02T01:36:38.458Z',
 		stadiumCapacity: 0,
 		emptySeats: 0,
@@ -53,8 +53,8 @@
 		const response = await fetch('https://localhost:7123/api/matches/' + id);
 		if (response.ok) {
 			match = await response.json();
-			console.log('available seat: ' + JSON.stringify(match.availableSeats));
-			const response2 = await fetch('https://localhost:7123/api/stadiums/' + match.stadiumName);
+			console.log('available seat: ' + JSON.stringify(match));
+			const response2 = await fetch('https://localhost:7123/api/stadiums/' + match.stadium);
 			if (response2.ok) {
 				stadium = await response2.json();
 			} else {
@@ -109,8 +109,7 @@
 			}
 		}
 	}
-	let creditCard: string = '';
-	let pin: string = '';
+
 	async function reservationRequest() {
 		const response = await fetch('https://localhost:7123/api/reservations/book', {
 			method: 'POST',
@@ -160,7 +159,7 @@
 							type="text"
 							class="form-control"
 							id="match"
-							value="{match.homeTeam} VS. {match.awayTeam} in {match.stadiumName}"
+							value="{match.homeTeam} VS. {match.awayTeam} in {match.stadium}"
 							disabled
 						/>
 					</div>
@@ -199,6 +198,7 @@
 					<h1 class="title">Step 3</h1>
 					<div class="form-outline py-2">
 						<label for="match">Enter Your Credit Card Number</label>
+						<input class="input-element" />
 					</div>
 				</div>
 				<button class="btn" style="font-size: 1.5rem;" type="submit">Confirm</button>
