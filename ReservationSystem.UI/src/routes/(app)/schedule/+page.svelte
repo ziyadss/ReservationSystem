@@ -5,26 +5,19 @@
 	import { time_ranges_to_array } from 'svelte/internal';
 	import { navigate } from 'svelte-routing';
 	export let data: PageData;
+	import { browser } from '$app/environment';
 
 	let matches = data.matches;
-	// Scroll button scripting
-	/*
-    let scroll_btn = document.querySelector('.scroll-top');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-            scroll_btn!.classList.add('active');
-        } else {
-            scroll_btn!.classList.remove('active');
-        }
-    });
-    scroll_btn!.addEventListener('click', () => {
-        document.documentElement.scrollIntoView({
-            behavior: 'smooth',
-        });
-    });
-    */
 	function navigateBook(id: number) {
-		window.location.replace('/reservation/' + id);
+		let _token;
+		if (browser) {
+			_token = window.localStorage.getItem('token');
+		}
+		if (_token) {
+			window.location.replace('/reservation/' + id);
+		} else {
+			alert('You need to log in to register a match');
+		}
 	}
 </script>
 

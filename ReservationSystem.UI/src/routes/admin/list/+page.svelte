@@ -2,6 +2,7 @@
     import '../../styles.css';
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
+    import Swal from 'sweetalert2';
 
     let token = '';
     onMount(async () => {
@@ -83,40 +84,75 @@
     }
 
     async function deleteUser(username: string) {
-        const response = await fetch('https://localhost:7123/api/users/' + username, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + token
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then(async (result: Swal.SweetAlertResult) => {
+            if (result.value) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                );
+                const response = await fetch('https://localhost:7123/api/users/' + username, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                });
+
+                if (response.ok) {
+                    alert("User deleted successfully");
+                    await getUsers();
+                } else {
+                    alert("HTTP-Error: " + response.status);
+                }
             }
         });
-
-        if (response.ok) {
-            alert("User deleted successfully");
-            await getUsers();
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
     }
 
     async function authorizeUser(username: string) {
-        const response = await fetch('https://localhost:7123/api/users/' + username, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                role: 'Manager'
-            })
-        });
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to authorize this user?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, authorize it!'
+        }).then(async (result: Swal.SweetAlertResult) => {
+            if (result.value) {
+                Swal.fire(
+                'Authorized!',
+                'The user has been authorized.',
+                'success'
+                );
+                // Make PATCH request to API to update user's role to "Manager" here
+                const response = await fetch('https://localhost:7123/api/users/' + username, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    },
+                    body: JSON.stringify({
+                        role: 'Manager'
+                    })
+                });
 
-        if (response.ok) {
-            alert("User authorized successfully");
-            await getUsers();
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
+                if (response.ok) {
+                    alert("User authorized successfully");
+                    await getUsers();
+                } else {
+                    alert("HTTP-Error: " + response.status);
+                }
+            }
+        });
     }
 
 </script>
@@ -158,50 +194,10 @@
                 <td>{user.nationality}</td>
                 <td>{user.role}</td>
                 <td>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_{user.userName}">Delete</button>
-                    <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal_{user.userName}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to delete user {user.userName}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger" on:click={() => deleteUser(user.userName)} data-dismiss="modal">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-danger" on:click={() => deleteUser(user.userName)}>Delete</button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}">Authorize</button>
-                    <!-- Authorize Modal -->
-                    <div class="modal fade" id="authorizeModal_{user.userName}" tabindex="-1" role="dialog" aria-labelledby="authorizeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="authorizeModalLabel">Confirm Authorize</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to authorize user {user.userName}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" on:click={() => authorizeUser(user.userName)} data-dismiss="modal">Authorize</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary" on:click={() => authorizeUser(user.userName)} disabled={user.role.toLowerCase() == "manager" || user.role.toLowerCase() == "admin"}>Authorize</button>
                 </td>
             </tr>
             {/each}
