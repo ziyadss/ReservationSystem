@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReservationSystem.Data;
+using ReservationSystem.Data.Matches;
 using ReservationSystem.Data.Reservations;
 using ReservationSystem.DataStructures.Reservations;
 using ReservationSystem.Repositories.Interfaces;
@@ -80,7 +81,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             .Where(r => r.HolderUserName == userName)
             .Skip(skip)
             .Take(take)
-            .Select(GetReservationInfo);
+            .Select(r => new ReservationInfo(r, GetReservationMatch(r)));
     }
 
     public async Task<ReservationInfo> BookTickets(string userName, IList<(int, int, int)> tickets)
@@ -96,7 +97,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
         };
 
         await AddAsync(reservation).ConfigureAwait(false);
-        
+
         var booked = new List<Ticket>(tickets.Count);
         try
         {
@@ -128,12 +129,10 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
 
         await UpdateAsync(reservation).ConfigureAwait(false);
 
-        reservation.Tickets ??= booked;
-
-        return GetReservationInfo(reservation);
+        return new ReservationInfo(reservation, GetReservationMatch(reservation));
     }
 
-    private static ReservationInfo GetReservationInfo(Reservation reservation)
+    private static Match GetReservationMatch(Reservation reservation)
     {
         var matches = reservation.Tickets!.Select(t => t.Match!).ToList();
         var match = matches.First();
@@ -143,13 +142,17 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             throw new Exception($"Reservation {reservation.Id} contains tickets for more than one match.");
         }
 
-        return new ReservationInfo(reservation, match);
+        return match;
     }
 
     private async Task<Ticket> GetTicket((int, int, int) ticket)
     {
         var (matchId, row, column) = ticket;
-        var foundTicket = await _ticketsSet.FindAsync(matchId, row, column).ConfigureAwait(false);
+        var foundTicket = await _ticketsSet
+            .Include(t => t.Match)
+            .SingleOrDefaultAsync(t => t.MatchId == matchId && t.Row == row && t.Column == column)
+            .ConfigureAwait(false);
+
         if (foundTicket is null)
         {
             throw new Exception($"Ticket with matchId {matchId}, row {row}, and column {column} does not exist.");
