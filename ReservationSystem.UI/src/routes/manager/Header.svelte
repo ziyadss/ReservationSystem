@@ -81,9 +81,9 @@
         </li>
         <li class="nav-item">
             {#if currentURL.includes('stadium')}
-                <a class="nav-link active" href="/manager/stadium/list">Stadium</a>
+                <a class="nav-link active" href="/manager/stadium/create">Create Stadium</a>
             {:else}
-                <a class="nav-link" href="/manager/stadium/list">Stadium</a>
+                <a class="nav-link" href="/manager/stadium/create">Create Stadium</a>
             {/if}
         </li>
       </ul>
