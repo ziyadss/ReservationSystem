@@ -87,7 +87,7 @@ public class ReservationsController : BaseController<ReservationsController>
         catch (ArgumentException e)
         when (e.Message.StartsWith("Invalid ticket number") || e.Message == "All tickets in a reservation must be for the same match.")
         {
-            return BadRequest("InvalidTicketNumber", e.Message);
+            return BadRequest("InvalidBooking", e.Message);
         }
 
         try
