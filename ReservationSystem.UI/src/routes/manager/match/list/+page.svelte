@@ -1,7 +1,6 @@
 <script>
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
-	import { redirect } from "@sveltejs/kit";
     import Swal from 'sweetalert2';
     import 'sweetalert2/src/sweetalert2.scss'
 
@@ -36,7 +35,7 @@
         });
         if (response.ok) {
             const data = await response.json();
-            matches = data.items;
+            matches = data;
         }
     }
 </script>
