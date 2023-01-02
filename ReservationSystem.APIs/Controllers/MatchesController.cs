@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReservationSystem.Data.Matches;
-using ReservationSystem.Data.Reservations;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -82,6 +80,26 @@ public class MatchesController : BaseController<MatchesController>
         _logger.LogInformation($"Call to {nameof(MatchesController)}.{nameof(GetMatch)}");
 
         var match = await _matchRepository.GetAsync(matchId).ConfigureAwait(false);
+        if (match is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(match);
+    }
+
+    /// <summary>
+    /// Gets the nearest upcoming match.
+    /// </summary>
+    /// <response code="200">Returns a <see cref="MatchDetailedInfo"/> item.</response>
+    /// <response code="404">If no upcoming matces.</response>
+    [HttpGet("next")]
+    [ProducesResponseType(typeof(MatchDetailedInfo), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetNext()
+    {
+        _logger.LogInformation($"Call to {nameof(MatchesController)}.{nameof(GetNext)}");
+
+        var match = await _matchRepository.GetNextAsync().ConfigureAwait(false);
         if (match is null)
         {
             return NotFound();

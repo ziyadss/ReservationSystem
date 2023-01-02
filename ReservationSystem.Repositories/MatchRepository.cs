@@ -131,4 +131,15 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
 
         return _ticketsSet.AddRangeAsync(tickets);
     }
+
+    public async Task<MatchDetailedInfo?> GetNextAsync()
+    {
+        var match = await _entitySet.Include(m => m.Stadium).Include(m => m.Tickets).OrderBy(m => m.DateTime).FirstOrDefaultAsync().ConfigureAwait(false);
+        if (match is null)
+        {
+            return null;
+        }
+
+        return new MatchDetailedInfo(match);
+    }
 }

@@ -12,4 +12,6 @@ public interface IMatchRepository : IRepository<Match>
     new IEnumerable<MatchInfo> Get(int skip, int take);
 
     Task<MatchDetailedInfo?> GetAsync(int id);
+
+    Task<MatchDetailedInfo?> GetNextAsync();
 }

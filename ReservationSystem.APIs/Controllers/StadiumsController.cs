@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReservationSystem.Data.Stadiums;
-using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Stadiums;
 using ReservationSystem.Repositories.Interfaces;
 using System.Collections.Generic;
