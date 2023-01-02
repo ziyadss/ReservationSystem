@@ -658,39 +658,39 @@ namespace ReservationSystem.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "admin",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "213be1db-9201-485a-85d7-6fe9877dc08c", "AQAAAAIAAYagAAAAEAa4cWOhDLz6U3JqHtEN/7yFJwaf8+rp4g8VQlgfZ7QQddtTm+6Z+F5yE/te0j8x+Q==", "288fbde9-05d3-46fb-8c39-2008b64099ff" });
+                values: new object[] { "c30a038e-3aa0-4bd4-88f2-d63b97f790e8", "AQAAAAIAAYagAAAAEIPUfFGtwwmDR4PR4pxIR4tJvluQWtYRE538HIyX03bodtvHx+YtT/EEkdtT8BtYfg==", "2723d477-bab1-4531-8a47-3d3b4ccb3528" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "initial-manager",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "9f6bc360-b5b5-4739-80f7-e4a3523ba946", "AQAAAAIAAYagAAAAEFRyeScxM4oloECrpeUbZKo9u/oO8xcS3TI+6tAS1rFXkFJKpHF3UVpMrF58+oz5YA==", "3d5e627d-1194-43db-bac9-1508beb53a1d" });
+                values: new object[] { "6e6d2b7b-c9a4-4918-90fa-bdf7cfe86239", "AQAAAAIAAYagAAAAEInaGlQn6oeKqVkRK4+M9Rg2j2/kt737hTgVYJ2aXRIPxvNiFuID6RD/+5fhyhDL1w==", "b6fbc76b-3f1a-4a25-90e1-bc5b7176d20a" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "initial-user",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "7840a0ea-c592-4db0-bc95-059c82378ee1", "AQAAAAIAAYagAAAAEKS73fsAorysybwyPtlBoMH1+2cH5nAO2bMKMgqxUBs729yEVy34TReMzeb5bhjMPg==", "ea4c3062-75ed-4505-8016-5bcaa8540181" });
+                values: new object[] { "35b3569b-3250-49ab-9f6f-9da33f9075ff", "AQAAAAIAAYagAAAAEMj80pXoUkc+9EMDeO7H0B+R3zjQKty8kPUwAng2+fRS8XtsC8axxIFQZSUFOJX0Zg==", "3a5c13cd-a01d-4584-9d5f-ab2ada1c45a2" });
 
             migrationBuilder.UpdateData(
                 table: "Matches",
                 keyColumn: "Id",
                 keyValue: 1,
-                columns: new[] { "AwayTeamName", "DateTime", "HomeTeamName", "StadiumName" },
-                values: new object[] { "Belgium", new DateTime(2023, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), "Belgium", "Lusail Stadium" });
+                columns: new[] { "DateTime", "HomeTeamName", "StadiumName" },
+                values: new object[] { new DateTime(2023, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), "Belgium", "Lusail Stadium" });
 
             migrationBuilder.InsertData(
                 table: "Matches",
                 columns: new[] { "Id", "AwayTeamName", "DateTime", "FirstLinesman", "HomeTeamName", "Referee", "SecondLinesman", "StadiumName" },
                 values: new object[,]
                 {
-                    { 2, "Netherlands", new DateTime(2023, 2, 2, 9, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 2", "Spain", "Referee 2", "Second Linesman 2", "Ahmad bin Ali Stadium" },
-                    { 3, "Croatia", new DateTime(2023, 3, 3, 10, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 3", "Portugal", "Referee 3", "Second Linesman 1", "Lusail Stadium" },
+                    { 2, "Germany", new DateTime(2023, 2, 2, 9, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 2", "Spain", "Referee 2", "Second Linesman 2", "Ahmad bin Ali Stadium" },
+                    { 3, "Belgium", new DateTime(2023, 3, 3, 10, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 3", "Portugal", "Referee 3", "Second Linesman 1", "Lusail Stadium" },
                     { 4, "Portugal", new DateTime(2023, 4, 4, 11, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 1", "Netherlands", "Referee 4", "Second Linesman 2", "Ahmad bin Ali Stadium" },
-                    { 5, "France", new DateTime(2023, 5, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 2", "Germany", "Referee 1", "Second Linesman 1", "Lusail Stadium" },
-                    { 6, "Spain", new DateTime(2023, 6, 6, 13, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 3", "France", "Referee 2", "Second Linesman 2", "Ahmad bin Ali Stadium" }
+                    { 5, "Croatia", new DateTime(2023, 5, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 2", "Germany", "Referee 1", "Second Linesman 1", "Lusail Stadium" },
+                    { 6, "Portugal", new DateTime(2023, 6, 6, 13, 0, 0, 0, DateTimeKind.Unspecified), "First Linesman 3", "France", "Referee 2", "Second Linesman 2", "Ahmad bin Ali Stadium" }
                 });
 
             migrationBuilder.InsertData(
@@ -3082,8 +3082,8 @@ namespace ReservationSystem.Data.Migrations
                 table: "Matches",
                 keyColumn: "Id",
                 keyValue: 1,
-                columns: new[] { "AwayTeamName", "DateTime", "HomeTeamName", "StadiumName" },
-                values: new object[] { "Spain", new DateTime(2023, 2, 1, 20, 0, 0, 0, DateTimeKind.Unspecified), "France", "Ahmad bin Ali Stadium" });
+                columns: new[] { "DateTime", "HomeTeamName", "StadiumName" },
+                values: new object[] { new DateTime(2023, 2, 1, 20, 0, 0, 0, DateTimeKind.Unspecified), "France", "Ahmad bin Ali Stadium" });
 
             migrationBuilder.InsertData(
                 table: "Stadiums",

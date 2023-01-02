@@ -147,13 +147,21 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         for (int i = 0; i < 6; i++)
         {
             var id = i + 1;
-            int stadiumIndex = i * 3 % stadiums.Length;
+            var stadiumIndex = i * 3 % stadiums.Length;
             matchIdToStadiumIndex[id] = stadiumIndex;
+
+            var homeIdx = i * 13 % seedingTeams.Length;
+            var awayIdx = (i * 11 + 13) % seedingTeams.Length;
+            if (homeIdx == awayIdx)
+            {
+                awayIdx = (awayIdx + 1) % seedingTeams.Length;
+            }
+
             var match = new Match
             {
                 Id = id,
-                HomeTeamName = seedingTeams[i * 13 % seedingTeams.Length],
-                AwayTeamName = seedingTeams[(i * 11 + 13) % seedingTeams.Length],
+                HomeTeamName = seedingTeams[homeIdx],
+                AwayTeamName = seedingTeams[awayIdx],
                 StadiumName = stadiums[stadiumIndex].Name,
                 DateTime = new DateTime(2023, i % 12 + 1, i % 29 + 1, i % 14 + 8, 0, 0),
                 Referee = "Referee " + ((i % 4) + 1),

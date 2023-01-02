@@ -12,7 +12,7 @@ using ReservationSystem.Data;
 namespace ReservationSystem.Data.Migrations
 {
     [DbContext(typeof(ReservationSystemDbContext))]
-    [Migration("20230102024746_AddMatches")]
+    [Migration("20230102030729_AddMatches")]
     partial class AddMatches
     {
         /// <inheritdoc />
@@ -201,7 +201,7 @@ namespace ReservationSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            AwayTeamName = "Belgium",
+                            AwayTeamName = "Spain",
                             DateTime = new DateTime(2023, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstLinesman = "First Linesman 1",
                             HomeTeamName = "Belgium",
@@ -212,7 +212,7 @@ namespace ReservationSystem.Data.Migrations
                         new
                         {
                             Id = 2,
-                            AwayTeamName = "Netherlands",
+                            AwayTeamName = "Germany",
                             DateTime = new DateTime(2023, 2, 2, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstLinesman = "First Linesman 2",
                             HomeTeamName = "Spain",
@@ -223,7 +223,7 @@ namespace ReservationSystem.Data.Migrations
                         new
                         {
                             Id = 3,
-                            AwayTeamName = "Croatia",
+                            AwayTeamName = "Belgium",
                             DateTime = new DateTime(2023, 3, 3, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstLinesman = "First Linesman 3",
                             HomeTeamName = "Portugal",
@@ -245,7 +245,7 @@ namespace ReservationSystem.Data.Migrations
                         new
                         {
                             Id = 5,
-                            AwayTeamName = "France",
+                            AwayTeamName = "Croatia",
                             DateTime = new DateTime(2023, 5, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstLinesman = "First Linesman 2",
                             HomeTeamName = "Germany",
@@ -256,7 +256,7 @@ namespace ReservationSystem.Data.Migrations
                         new
                         {
                             Id = 6,
-                            AwayTeamName = "Spain",
+                            AwayTeamName = "Portugal",
                             DateTime = new DateTime(2023, 6, 6, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstLinesman = "First Linesman 3",
                             HomeTeamName = "France",
@@ -2846,7 +2846,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "admin",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "213be1db-9201-485a-85d7-6fe9877dc08c",
+                            ConcurrencyStamp = "c30a038e-3aa0-4bd4-88f2-d63b97f790e8",
                             Email = "admin@domain.com",
                             EmailConfirmed = false,
                             FirstName = "AdminFirstName",
@@ -2856,9 +2856,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "ADMIN@DOMAIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAa4cWOhDLz6U3JqHtEN/7yFJwaf8+rp4g8VQlgfZ7QQddtTm+6Z+F5yE/te0j8x+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIPUfFGtwwmDR4PR4pxIR4tJvluQWtYRE538HIyX03bodtvHx+YtT/EEkdtT8BtYfg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "288fbde9-05d3-46fb-8c39-2008b64099ff",
+                            SecurityStamp = "2723d477-bab1-4531-8a47-3d3b4ccb3528",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -2867,7 +2867,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "initial-manager",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "9f6bc360-b5b5-4739-80f7-e4a3523ba946",
+                            ConcurrencyStamp = "6e6d2b7b-c9a4-4918-90fa-bdf7cfe86239",
                             Email = "initialmanager@domain.com",
                             EmailConfirmed = false,
                             FirstName = "ManagerFirstName",
@@ -2877,9 +2877,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "INITIALMANAGER@DOMAIN.COM",
                             NormalizedUserName = "INITIALMANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFRyeScxM4oloECrpeUbZKo9u/oO8xcS3TI+6tAS1rFXkFJKpHF3UVpMrF58+oz5YA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEInaGlQn6oeKqVkRK4+M9Rg2j2/kt737hTgVYJ2aXRIPxvNiFuID6RD/+5fhyhDL1w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3d5e627d-1194-43db-bac9-1508beb53a1d",
+                            SecurityStamp = "b6fbc76b-3f1a-4a25-90e1-bc5b7176d20a",
                             TwoFactorEnabled = false,
                             UserName = "initialManager"
                         },
@@ -2888,7 +2888,7 @@ namespace ReservationSystem.Data.Migrations
                             Id = "initial-user",
                             AccessFailedCount = 0,
                             Birthdate = new DateTime(2000, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "7840a0ea-c592-4db0-bc95-059c82378ee1",
+                            ConcurrencyStamp = "35b3569b-3250-49ab-9f6f-9da33f9075ff",
                             Email = "initialuser@domain.com",
                             EmailConfirmed = false,
                             FirstName = "UserFirstName",
@@ -2898,9 +2898,9 @@ namespace ReservationSystem.Data.Migrations
                             Nationality = "eg",
                             NormalizedEmail = "INITIALUSER@DOMAIN.COM",
                             NormalizedUserName = "INITIALUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKS73fsAorysybwyPtlBoMH1+2cH5nAO2bMKMgqxUBs729yEVy34TReMzeb5bhjMPg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMj80pXoUkc+9EMDeO7H0B+R3zjQKty8kPUwAng2+fRS8XtsC8axxIFQZSUFOJX0Zg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ea4c3062-75ed-4505-8016-5bcaa8540181",
+                            SecurityStamp = "3a5c13cd-a01d-4584-9d5f-ab2ada1c45a2",
                             TwoFactorEnabled = false,
                             UserName = "initialUser"
                         });
