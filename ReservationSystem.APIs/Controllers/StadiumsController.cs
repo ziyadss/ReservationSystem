@@ -104,7 +104,7 @@ public class StadiumsController : BaseController<StadiumsController>
             return InvalidParameter("Stadium must have at least one column.");
         }
 
-        var existingStadium =await  _stadiumRepository.GetAsync(stadiumPayload.Name).ConfigureAwait(false);
+        var existingStadium = await _stadiumRepository.GetAsync(stadiumPayload.Name).ConfigureAwait(false);
         if (existingStadium is not null)
         {
             return InvalidParameter("Stadium with this name already exists.");
