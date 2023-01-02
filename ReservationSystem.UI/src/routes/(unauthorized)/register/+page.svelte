@@ -3,6 +3,9 @@
 	import { browser } from "$app/environment"
 	import { enhance } from '$app/forms';
 	import cover from '$lib/images/cover-photo.jpg';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
+
 	let date = new Date();
 	let user = {
 		userName: '',
@@ -30,7 +33,11 @@
 			if (browser) window.localStorage.setItem('token', data.token);
 			window.location.replace('/');
 		} else {
-			alert('Please enter a valid credentials');
+            Swal.fire(
+            'Invalid!',
+            'Invalid credentials.',
+            'error'
+            );
 		}
 	}
 </script>

@@ -16,11 +16,19 @@
 
         if (_token) {
             if (_role == 'User') {
-                alert("You are not authorized to access this page. Redirecting to main page")
+                Swal.fire(
+                'Invalid!',
+                'Invalid credentials.',
+                'error'
+                );
                 window.location.replace('/');
             }
             else if (_role == 'Manager') {
-                alert("You are not authorized to access this page. Redirecting to main page")
+                Swal.fire(
+                'Invalid!',
+                'Invalid credentials.',
+                'error'
+                );
                 window.location.replace('/manager/match/list');
             }
             token = _token;
@@ -65,7 +73,11 @@
             take = json.take;
             next = json.next as string;
         } else {
-            alert("HTTP-Error: " + response.status);
+            Swal.fire(
+            'Error!',
+            'HTTP-Error: ' + response.status,
+            'error'
+            );
         }
     }
 
@@ -105,7 +117,7 @@
 
                 if (response.ok) {
                     Swal.fire(
-                    'Deleted!',
+                    'User Deleted!',
                     'The user has been deleted.',
                     'success'
                     );
@@ -145,7 +157,7 @@
 
                 if (response.ok) {
                     Swal.fire(
-                    'Authorized!',
+                    'User Authorized!',
                     'The user has been authorized.',
                     'success'
                     );

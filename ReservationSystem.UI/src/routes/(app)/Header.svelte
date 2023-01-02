@@ -2,6 +2,8 @@
 	import logo from '$lib/images/logo.svg';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	let loggedin = false;
 	if (browser) {
@@ -13,7 +15,11 @@
 		if (browser) {
 			window.localStorage.removeItem('token');
 			window.localStorage.removeItem('role');
-			alert('You have been logged out');
+            Swal.fire(
+            'Log Out!',
+            'You have been logged out.',
+            'success'
+            );
 			window.location.replace('/');
 		}
 	}

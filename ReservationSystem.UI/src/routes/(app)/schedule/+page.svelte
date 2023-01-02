@@ -6,6 +6,8 @@
 	import { navigate } from 'svelte-routing';
 	export let data: PageData;
 	import { browser } from '$app/environment';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	let matches = data.matches;
 	function navigateBook(id: number) {
@@ -16,7 +18,11 @@
 		if (_token) {
 			window.location.replace('/reservation/' + id);
 		} else {
-			alert('You need to log in to register a match');
+            Swal.fire(
+            'Invalid!',
+            'You need to log in to reserve a match.',
+            'error'
+            );
 		}
 	}
 </script>
