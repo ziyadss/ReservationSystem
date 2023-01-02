@@ -7,7 +7,7 @@ namespace ReservationSystem.Repositories.Interfaces;
 
 public interface IStadiumRepository : IRepository<Stadium>
 {
-    new IEnumerable<StadiumInfo> Get(int skip, int take);
+    IEnumerable<StadiumInfo> Get();
 
     Task<StadiumDetailedInfo?> GetAsync(string name);
 }

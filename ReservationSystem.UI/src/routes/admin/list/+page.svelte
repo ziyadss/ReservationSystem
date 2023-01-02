@@ -160,7 +160,7 @@
                 <td>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_{user.userName}">Delete</button>
                     <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal_{user.userName}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal" id="deleteModal_{user.userName}">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -181,9 +181,9 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}">Authorize</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}" disabled={user.role.toLowerCase() == "manager" || user.role.toLowerCase() == "admin"}>Authorize</button>
                     <!-- Authorize Modal -->
-                    <div class="modal fade" id="authorizeModal_{user.userName}" tabindex="-1" role="dialog" aria-labelledby="authorizeModalLabel" aria-hidden="true">
+                    <div class="modal" id="authorizeModal_{user.userName}">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
