@@ -14,7 +14,7 @@ public class Reservation
     public int Id { get; set; }
 
     [ForeignKey(nameof(User))]
-    public string? HolderUserName { get; set; }
+    public required string HolderUserName { get; set; }
 
     [InverseProperty(nameof(User.Reservations))]
     public User? Holder { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReservationSystem.Data;
 using ReservationSystem.Data.Reservations;
 using ReservationSystem.DataStructures.Reservations;
@@ -13,8 +12,11 @@ namespace ReservationSystem.Repositories;
 
 public class ReservationRepository : BaseRepository<Reservation>, IReservationRepository
 {
+    private readonly DbSet<Ticket> _ticketsSet;
+
     public ReservationRepository(ReservationSystemDbContext dbContext) : base(dbContext)
     {
+        _ticketsSet = _dbContext.Set<Ticket>();
     }
 
     public Task<int> CountAsync(string userName)
@@ -45,7 +47,7 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             throw new Exception($"Reservation with reservationId {reservationId} does not exist.");
         }
 
-        if (string.IsNullOrWhiteSpace(reservation.HolderUserName) || reservation.HolderUserName != userName)
+        if (reservation.HolderUserName != userName)
         {
             throw new Exception($"Reservation {reservationId} is not booked by {userName}.");
         }
@@ -78,12 +80,61 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             .Where(r => r.HolderUserName == userName)
             .Skip(skip)
             .Take(take)
-            .Select(Map);
+            .Select(GetReservationInfo);
     }
 
-    private static ReservationInfo Map(Reservation reservation)
+    public async Task<ReservationInfo> BookTickets(string userName, IList<(int, int, int)> tickets)
     {
-        var matches = reservation.Tickets!.Select(t => t.Match!);
+        if (string.IsNullOrWhiteSpace(userName))
+        {
+            throw new ArgumentNullException(nameof(userName));
+        }
+
+        var reservation = new Reservation
+        {
+            HolderUserName = userName
+        };
+
+        await AddAsync(reservation).ConfigureAwait(false);
+        
+        var booked = new List<Ticket>(tickets.Count);
+        try
+        {
+            foreach (var t in tickets)
+            {
+                var ticket = await GetTicket(t).ConfigureAwait(false);
+
+                if (ticket.ReservationId is not null)
+                {
+                    throw new Exception($"Ticket {ticket.TicketNumber} is already booked.");
+                }
+
+                ticket.ReservationId = reservation.Id;
+                await UpdateTicket(ticket).ConfigureAwait(false);
+                booked.Add(ticket);
+            }
+        }
+        catch
+        {
+            foreach (var ticket in booked)
+            {
+                ticket.ReservationId = null;
+                await UpdateTicket(ticket).ConfigureAwait(false);
+            }
+
+            throw;
+        }
+
+        await UpdateAsync(reservation).ConfigureAwait(false);
+
+        reservation.Tickets ??= booked;
+
+        return GetReservationInfo(reservation);
+    }
+
+    private static ReservationInfo GetReservationInfo(Reservation reservation)
+    {
+        var matches = reservation.Tickets!.Select(t => t.Match!).ToList();
         var match = matches.First();
 
         if (matches.Any(m => m.Id != match.Id))
@@ -94,47 +145,21 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
         return new ReservationInfo(reservation, match);
     }
 
-    public Task<ReservationInfo> BookTickets(string userName, IList<(int, int, int)> seats)
+    private async Task<Ticket> GetTicket((int, int, int) ticket)
     {
-        //if (string.IsNullOrWhiteSpace(userName))
-        //{
-        //    throw new ArgumentNullException(nameof(userName));
-        //}
+        var (matchId, row, column) = ticket;
+        var foundTicket = await _ticketsSet.FindAsync(matchId, row, column).ConfigureAwait(false);
+        if (foundTicket is null)
+        {
+            throw new Exception($"Ticket with matchId {matchId}, row {row}, and column {column} does not exist.");
+        }
 
-        //var booked = new List<Ticket>(seats.Count);
+        return foundTicket;
+    }
 
-        //try
-        //{
-        //    foreach (var (matchId, row, column) in seats)
-        //    {
-        //        var ticket = await base.FindAsync(matchId, row, column).ConfigureAwait(false);
-        //        if (ticket is null)
-        //        {
-        //            throw new Exception($"Ticket with matchId {matchId}, row {row}, and column {column} does not exist.");
-        //        }
-
-        //        if (!string.IsNullOrWhiteSpace(ticket.HolderUserName))
-        //        {
-        //            throw new Exception($"Ticket {ticket.TicketNumber} is already booked, by {ticket.HolderUserName}.");
-        //        }
-
-        //        ticket.HolderUserName = userName;
-        //        await UpdateAsync(ticket).ConfigureAwait(false);
-        //        booked.Add(ticket);
-        //    }
-        //}
-        //catch
-        //{
-        //    foreach (var ticket in booked)
-        //    {
-        //        ticket.HolderUserName = null;
-        //        await UpdateAsync(ticket).ConfigureAwait(false);
-        //    }
-
-        //    throw;
-        //}
-
-        //return booked.Select(t => new TicketBriefInfo(t));
-        throw new NotImplementedException();
+    private Task UpdateTicket(Ticket ticket)
+    {
+        _ticketsSet.Update(ticket);
+        return _dbContext.SaveChangesAsync();
     }
 }

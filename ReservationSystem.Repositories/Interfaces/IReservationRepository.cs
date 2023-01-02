@@ -7,7 +7,7 @@ namespace ReservationSystem.Repositories.Interfaces;
 
 public interface IReservationRepository : IRepository<Reservation>
 {
-    Task<ReservationInfo> BookTickets(string userName, IList<(int, int, int)> seats);
+    Task<ReservationInfo> BookTickets(string userName, IList<(int, int, int)> ticket);
 
     Task Cancel(string userName, int reservationId);
 
