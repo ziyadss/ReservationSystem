@@ -67,9 +67,11 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         }
 
         var teamConflict = await _entitySet
-            .AnyAsync(m => m.DateTime.Date == match.DateTime.Date &&
-            (m.HomeTeamName == match.HomeTeamName || m.HomeTeamName == match.AwayTeamName ||
-            m.AwayTeamName == match.HomeTeamName || m.AwayTeamName == match.AwayTeamName)).ConfigureAwait(false);
+            .AnyAsync(m => m.Id != match.Id &&
+                m.DateTime.Date == match.DateTime.Date &&
+                (m.HomeTeamName == match.HomeTeamName || m.HomeTeamName == match.AwayTeamName ||
+                m.AwayTeamName == match.HomeTeamName || m.AwayTeamName == match.AwayTeamName))
+            .ConfigureAwait(false);
 
         if (teamConflict)
         {
@@ -77,7 +79,8 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         }
 
         var stadiumConflict = _entitySet
-            .Where(m => m.StadiumName == match.StadiumName)
+            .Where(m => m.Id != match.Id &&
+                m.StadiumName == match.StadiumName)
             .AsEnumerable()
             .Any(m => Math.Abs((m.DateTime - match.DateTime).TotalHours) < 3);
 
