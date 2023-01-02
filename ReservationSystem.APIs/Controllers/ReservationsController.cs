@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Reservations;
 using ReservationSystem.Repositories.Interfaces;
 using System;

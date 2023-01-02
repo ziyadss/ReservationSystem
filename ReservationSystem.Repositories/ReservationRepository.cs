@@ -112,6 +112,16 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
                 await UpdateTicket(ticket).ConfigureAwait(false);
                 booked.Add(ticket);
             }
+
+            await UpdateAsync(reservation).ConfigureAwait(false);
+
+            var match = GetReservationMatch(reservation);
+            if (match.DateTime > DateTime.UtcNow.AddHours(1))
+            {
+                throw new Exception($"Cannot book ticket for match after it starts or ends.");
+            }
+
+            return new ReservationInfo(reservation, match);
         }
         catch
         {
@@ -124,10 +134,6 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
             await RemoveAsync(reservation).ConfigureAwait(false);
             throw;
         }
-
-        await UpdateAsync(reservation).ConfigureAwait(false);
-
-        return new ReservationInfo(reservation, GetReservationMatch(reservation));
     }
 
     private static Match GetReservationMatch(Reservation reservation)
