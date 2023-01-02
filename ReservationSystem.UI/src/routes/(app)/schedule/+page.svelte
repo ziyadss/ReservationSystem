@@ -5,6 +5,7 @@
 	import { time_ranges_to_array } from 'svelte/internal';
 	import { navigate } from 'svelte-routing';
 	export let data: PageData;
+	import { browser } from '$app/environment';
 
 	let matches = data.matches;
 	// Scroll button scripting
@@ -24,7 +25,15 @@
     });
     */
 	function navigateBook(id: number) {
-		window.location.replace('/reservation/' + id);
+		let _token;
+		if (browser) {
+			_token = window.localStorage.getItem('token');
+		}
+		if (_token) {
+			window.location.replace('/reservation/' + id);
+		} else {
+			alert('You need to log in to register a match');
+		}
 	}
 </script>
 
