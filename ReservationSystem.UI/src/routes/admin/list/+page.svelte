@@ -83,6 +83,11 @@
     }
 
     async function deleteUser(username: string) {
+        let confirm = window.confirm("Are you sure you want to delete this user?");
+        if (!confirm) {
+            return;
+        }
+
         const response = await fetch('https://localhost:7123/api/users/' + username, {
             method: 'DELETE',
             headers: {
@@ -100,6 +105,11 @@
     }
 
     async function authorizeUser(username: string) {
+        let confirm = window.confirm("Are you sure you want to authorize this user?");
+        if (!confirm) {
+            return;
+        }
+
         const response = await fetch('https://localhost:7123/api/users/' + username, {
             method: 'PATCH',
             headers: {
@@ -158,50 +168,10 @@
                 <td>{user.nationality}</td>
                 <td>{user.role}</td>
                 <td>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_{user.userName}">Delete</button>
-                    <!-- Delete Modal -->
-                    <div class="modal" id="deleteModal_{user.userName}">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to delete user {user.userName}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger" on:click={() => deleteUser(user.userName)} data-dismiss="modal">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-danger" on:click={() => deleteUser(user.userName)}>Delete</button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}" disabled={user.role.toLowerCase() == "manager" || user.role.toLowerCase() == "admin"}>Authorize</button>
-                    <!-- Authorize Modal -->
-                    <div class="modal" id="authorizeModal_{user.userName}">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="authorizeModalLabel">Confirm Authorize</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to authorize user {user.userName}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" on:click={() => authorizeUser(user.userName)} data-dismiss="modal">Authorize</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary" on:click={() => authorizeUser(user.userName)} disabled={user.role.toLowerCase() == "manager" || user.role.toLowerCase() == "admin"}>Authorize</button>
                 </td>
             </tr>
             {/each}
