@@ -4,6 +4,7 @@
 	import Swal from 'sweetalert2';
 	import 'sweetalert2/src/sweetalert2.scss';
 	import { identity } from 'svelte/internal';
+	import countries from './countries_profile.json';
 
 	//check if logged in before loading page and get user data
 	let token = '';
@@ -378,6 +379,19 @@
 												<option value="2">Male</option>
 												<option value="1">Unspecified</option>
 												<option value="0">Unknown</option>
+											</select>
+										</div>
+										<div class="form-outline">
+											<label class="input-title" for="oldp">Nationality</label>
+											<select
+												class="form-control form-control-lg"
+												bind:value={profilePayload.nationality}
+												name="nationality"
+												style="border-radius: 1rem;font-size: 16px;padding: .32rem .75rem;border: none; background-color:white;"
+											>
+												{#each countries as contry}
+													<option value={contry.name}>{contry.name}</option>
+												{/each}
 											</select>
 										</div>
 									</div>

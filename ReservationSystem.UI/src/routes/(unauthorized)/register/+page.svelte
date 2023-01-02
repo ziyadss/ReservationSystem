@@ -1,10 +1,11 @@
 <script lang="js">
 	import logo from '$lib/images/logo.svg';
-	import { browser } from "$app/environment"
+	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 	import cover from '$lib/images/cover-photo.jpg';
 	import Swal from 'sweetalert2';
 	import 'sweetalert2/src/sweetalert2.scss';
+	import countries from './countries.json';
 
 	let date = new Date();
 	let user = {
@@ -24,20 +25,14 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(
-				user
-			)
+			body: JSON.stringify(user)
 		});
 		if (response.ok) {
 			const data = await response.json();
 			if (browser) window.localStorage.setItem('token', data.token);
 			window.location.replace('/');
 		} else {
-            Swal.fire(
-            'Invalid!',
-            'Invalid credentials.',
-            'error'
-            );
+			Swal.fire('Invalid!', 'Invalid credentials.', 'error');
 		}
 	}
 </script>
@@ -46,7 +41,6 @@
 	<title>Register!</title>
 	<meta name="description" content="Qatar 2022&trade;" />
 </svelte:head>
-
 
 <section class="vh-100">
 	<div class="container-fluid">
@@ -82,7 +76,12 @@
 							</div>
 							<div class="form-outline mb-4">
 								<label class="input-title" id="usernameLabel" for="form2Example18">Email</label>
-								<input type="text" name="email" class="form-control form-control-lg" bind:value={user.email} />
+								<input
+									type="text"
+									name="email"
+									class="form-control form-control-lg"
+									bind:value={user.email}
+								/>
 							</div>
 							<div class="form-outline mb-4">
 								<label class="input-title" id="passwordLabel" for="form2Example28">Password</label>
@@ -120,15 +119,39 @@
 									<label class="input-title" id="passwordLabel" for="form2Example28"
 										>Birth Date</label
 									>
-									<input bind:value={user.birthdate} class="form-control form-control-lg" type="date" name="birthDate" />
+									<input
+										bind:value={user.birthdate}
+										class="form-control form-control-lg"
+										type="date"
+										name="birthDate"
+									/>
 								</div>
 								<div class="col">
 									<label class="input-title" for="form2Example28">Gender</label>
-									<select class="form-control form-control-lg" bind:value={user.gender} required name="gender" style="border-radius: 1rem;font-size: 16px;padding: .32rem .75rem;border: none;">
+									<select
+										class="form-control form-control-lg"
+										bind:value={user.gender}
+										required
+										name="gender"
+										style="border-radius: 1rem;font-size: 16px;padding: .32rem .75rem;border: none;"
+									>
 										<option value="3">Female</option>
 										<option value="2">Male</option>
 										<option value="1">Unspecified</option>
 										<option value="0">Unknown</option>
+									</select>
+								</div>
+								<div class="col">
+									<label class="input-title" for="form2Example28">nationality</label>
+									<select
+										class="form-control form-control-lg"
+										bind:value={user.nationality}
+										name="gender"
+										style="border-radius: 1rem;font-size: 16px;padding: .32rem .75rem;border: none;"
+									>
+										{#each countries as contry}
+											<option value={contry.name}>{contry.name}</option>
+										{/each}
 									</select>
 								</div>
 							</div>
