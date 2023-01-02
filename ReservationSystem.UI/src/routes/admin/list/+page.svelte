@@ -181,7 +181,7 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}">Authorize</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#authorizeModal_{user.userName}" disabled={user.role.toLowerCase() == "manager" || user.role.toLowerCase() == "admin"}>Authorize</button>
                     <!-- Authorize Modal -->
                     <div class="modal" id="authorizeModal_{user.userName}">
                         <div class="modal-dialog" role="document">
