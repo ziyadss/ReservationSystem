@@ -1,11 +1,12 @@
-<script>
+<script lang='ts'>
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
     import Swal from 'sweetalert2';
     import 'sweetalert2/src/sweetalert2.scss'
 
 	let token = '';
-    let matches = [];
+    let matches: { id: number, homeTeam: string, awayTeam: string, stadium: string, time: string, 
+        stadiumCapacity: number, emptySeats: number,  referee: string, firstLinesman: string, secondLinesman: string }[] = [];
 	onMount(async () => {
 		let _token;
 		let _role;
