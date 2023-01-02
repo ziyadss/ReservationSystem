@@ -8,12 +8,22 @@
 	let token = '';
 	onMount(async () => {
 		let _token;
+		let _role;
 		if (browser) {
 			_token = window.localStorage.getItem('token');
+			_role = window.localStorage.getItem('role');
 		}
 
 		if (_token) {
-			redirect(302, '/');
+			if (_role == 'User') {
+				window.location.replace('/');
+			}
+			else if (_role == 'Manager') {
+				window.location.replace('/manager/match/list');
+			}
+			else if (_role == 'Admin') {
+				window.location.replace('/admin/list');
+			}
 			token = _token;
 		}
 	});
@@ -43,7 +53,7 @@
 				window.location.replace('/');
 			}
 			else if (data.role == 'Manager') {
-				window.location.replace('/');
+				window.location.replace('/manager/match/list');
 			}
 			else if (data.role == 'Admin') {
 				window.location.replace('/admin/list');
