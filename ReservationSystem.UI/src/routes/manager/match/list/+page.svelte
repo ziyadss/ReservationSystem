@@ -39,93 +39,12 @@
             matches = data.items;
         }
     }
-
-    const tempMatches = [
-        {
-            homeTeam: "Argentine",
-            awayTeam: "Brazil",
-            stadiumName: "Al Bayt Stadium",
-            time: "2021-06-12T00:00:00",
-            referee: "Saeed Al Muhairi",
-            firstLinesMan: "Mohammed Al Shamsi",
-            secondLinesMan: "Khaled Al Mousa",
-        }
-    ]
 </script>
 
 <svelte:head>
     <title>Match List</title>
 </svelte:head>
 
-<!--
-<div class="d-flex flex-row row container mx-2 my-2">
-    <div class="col-6 px-5">
-        <h2>Match List</h2>
-    </div>
-    <div class="col-1">
-    </div>
-    <div class="col-1">
-    </div>
-    <div class="col-1">
-    </div>
-    <div class="col-1">
-    </div>
-    <div class="col-1">
-    </div>
-    <div class="col-1 my-2">
-        <button type="button" class="align-items-center btn btn-link btn-sm" data-ripple-color="dark">
-            <a href='/manager/match/create'><i class="fas fa-plus"></i></a>
-        </button>
-    </div>
-</div>
-
-<div class="d-flex my-4 flex-row container">
-
-    <table class="table table-bordered align-middle">
-        <thead>
-            <tr class="table-dark">
-                <th scope="col">#</th>
-                <th scope="col">Home Team</th>
-                <th scope="col">Away Team</th>
-                <th scope="col">Stadium</th>
-                <th scope="col">Date</th>
-                <th scope="col">Referee</th>
-                <th scope="col" colspan="2">Linesmen</th>
-                <th scope="col" colspan="2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each tempMatches as match}
-                <tr>
-                    <th scope="row">1</th>
-                    <td>{match.homeTeam}</td>
-                    <td>{match.awayTeam}</td>
-                    <td>{match.stadiumName}</td>
-                    <td>{new Date(match.time).toLocaleTimeString([], {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })}</td>
-                    <td>{match.referee}</td>
-                    <td>{match.firstLinesMan}</td>
-                    <td>{match.secondLinesMan}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm px-3" data-ripple-color="dark">
-                        <i class="fas fa-pen"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm px-3" data-ripple-color="dark">
-                        <i class="fas fa-times"></i>
-                        </button>
-                    </td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
-</div> -->
 
 <div class="container mt-5">
     <div class="row">
@@ -153,7 +72,7 @@
             </tr>
         </thead>
         <tbody>
-            {#each tempMatches as match, i}
+            {#each matches as match, i}
                 <tr>
                     <th scope="row">{i + 1}</th>
                     <td>{match.homeTeam}</td>
@@ -167,8 +86,8 @@
                         minute: '2-digit',
                     })}</td>
                     <td>{match.referee}</td>
-                    <td>{match.firstLinesMan}</td>
-                    <td>{match.secondLinesMan}</td>
+                    <td>{match.firstLinesman}</td>
+                    <td>{match.secondLinesman}</td>
                     <td>
                         <button class="btn btn-danger">Edit</button>
                     </td>
