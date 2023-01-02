@@ -1,9 +1,9 @@
 <script>
-	import { browser } from "$app/environment"
+	import { browser } from '$app/environment';
 	import logo from '$lib/images/logo.svg';
 	import cover from '$lib/images/cover-photo.jpg';
-	import { onMount } from "svelte";
-	import { redirect } from "@sveltejs/kit";
+	import { onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
 	import Swal from 'sweetalert2';
 	import 'sweetalert2/src/sweetalert2.scss';
 
@@ -19,11 +19,9 @@
 		if (_token) {
 			if (_role == 'User') {
 				window.location.replace('/');
-			}
-			else if (_role == 'Manager') {
+			} else if (_role == 'Manager') {
 				window.location.replace('/manager/match/list');
-			}
-			else if (_role == 'Admin') {
+			} else if (_role == 'Admin') {
 				window.location.replace('/admin/list');
 			}
 			token = _token;
@@ -41,9 +39,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(
-				user
-			)
+			body: JSON.stringify(user)
 		});
 		if (response.ok) {
 			const data = await response.json();
@@ -53,19 +49,13 @@
 			}
 			if (data.role == 'User') {
 				window.location.replace('/');
-			}
-			else if (data.role == 'Manager') {
+			} else if (data.role == 'Manager') {
 				window.location.replace('/manager/match/list');
-			}
-			else if (data.role == 'Admin') {
+			} else if (data.role == 'Admin') {
 				window.location.replace('/admin/list');
 			}
 		} else {
-            Swal.fire(
-            'Invalid!',
-            'Invalid credentials.',
-            'error'
-            );
+			await Swal.fire('Invalid!', 'Invalid credentials.', 'error');
 		}
 	}
 	//hide label on input
@@ -89,7 +79,6 @@
 	<title>Login & Start your journey!</title>
 	<meta name="description" content="Qatar 2022&trade;" />
 </svelte:head>
-
 
 <section class="vh-100">
 	<div class="container-fluid">
@@ -139,7 +128,12 @@
 				</div>
 			</div>
 			<div class="col-sm-6 px-0 d-none d-sm-block">
-				<img src={cover} alt="cover" class="w-100 vh-100" style="object-fit: cover; object-position: left;" />
+				<img
+					src={cover}
+					alt="cover"
+					class="w-100 vh-100"
+					style="object-fit: cover; object-position: left;"
+				/>
 			</div>
 		</div>
 	</div>

@@ -32,7 +32,7 @@
 			if (browser) window.localStorage.setItem('token', data.token);
 			window.location.replace('/');
 		} else {
-			Swal.fire('Invalid!', 'Invalid credentials.', 'error');
+			await Swal.fire('Invalid!', 'Invalid credentials.', 'error');
 		}
 	}
 </script>

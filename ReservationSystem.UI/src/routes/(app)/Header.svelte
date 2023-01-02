@@ -10,11 +10,11 @@
 		loggedin = localStorage.getItem('token') ? true : false;
 	}
 
-	function signOut() {
+	async function signOut() {
 		if (browser) {
 			window.localStorage.removeItem('token');
 			window.localStorage.removeItem('role');
-			Swal.fire('Log Out!', 'You have been logged out.', 'success');
+			await Swal.fire('Log Out!', 'You have been logged out.', 'success');
 			window.location.replace('/');
 		}
 	}

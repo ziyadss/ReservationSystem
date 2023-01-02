@@ -8,40 +8,40 @@
 
 	// "Country" : https://flagcdn.com/[COUNTRY_CODE].svg
 	let flag_urls = {
-		'Argentina': 'https://flagcdn.com/ar.svg',
-		'Australia': 'https://flagcdn.com/au.svg',
-		'Belgium': 'https://flagcdn.com/be.svg',
-		'Brazil': 'https://flagcdn.com/br.svg',
-		'Cameron': 'https://flagcdn.com/cm.svg',
-		'Canada': 'https://flagcdn.com/ca.svg',
-		'Croatia': 'https://flagcdn.com/hr.svg',
+		Argentina: 'https://flagcdn.com/ar.svg',
+		Australia: 'https://flagcdn.com/au.svg',
+		Belgium: 'https://flagcdn.com/be.svg',
+		Brazil: 'https://flagcdn.com/br.svg',
+		Cameron: 'https://flagcdn.com/cm.svg',
+		Canada: 'https://flagcdn.com/ca.svg',
+		Croatia: 'https://flagcdn.com/hr.svg',
 		'Costa Rica': 'https://flagcdn.com/cr.svg',
-		'Denmark': 'https://flagcdn.com/dk.svg',
-		'Ecuador': 'https://flagcdn.com/ec.svg',
-		'England': 'https://flagcdn.com/gb-eng.svg',
-		'France': 'https://flagcdn.com/fr.svg',
-		'Germany': 'https://flagcdn.com/de.svg',
-		'Ghana': 'https://flagcdn.com/gh.svg',
-		'Iran': 'https://flagcdn.com/ir.svg',
-		'Japan': 'https://flagcdn.com/jp.svg',
-		'Mexico': 'https://flagcdn.com/mx.svg',
-		'Morocco': 'https://flagcdn.com/ma.svg',
-		'Netherlands': 'https://flagcdn.com/nl.svg',
-		'Poland': 'https://flagcdn.com/pl.svg',
-		'Portugal': 'https://flagcdn.com/pt.svg',
-		'Qatar': 'https://flagcdn.com/qa.svg',
+		Denmark: 'https://flagcdn.com/dk.svg',
+		Ecuador: 'https://flagcdn.com/ec.svg',
+		England: 'https://flagcdn.com/gb-eng.svg',
+		France: 'https://flagcdn.com/fr.svg',
+		Germany: 'https://flagcdn.com/de.svg',
+		Ghana: 'https://flagcdn.com/gh.svg',
+		Iran: 'https://flagcdn.com/ir.svg',
+		Japan: 'https://flagcdn.com/jp.svg',
+		Mexico: 'https://flagcdn.com/mx.svg',
+		Morocco: 'https://flagcdn.com/ma.svg',
+		Netherlands: 'https://flagcdn.com/nl.svg',
+		Poland: 'https://flagcdn.com/pl.svg',
+		Portugal: 'https://flagcdn.com/pt.svg',
+		Qatar: 'https://flagcdn.com/qa.svg',
 		'Saudi Arabia': 'https://flagcdn.com/sa.svg',
-		'Senegal': 'https://flagcdn.com/sn.svg',
-		'Serbia': 'https://flagcdn.com/rs.svg',
+		Senegal: 'https://flagcdn.com/sn.svg',
+		Serbia: 'https://flagcdn.com/rs.svg',
 		'South Korea': 'https://flagcdn.com/kr.svg',
-		'Spain': 'https://flagcdn.com/es.svg',
-		'Switzerland': 'https://flagcdn.com/ch.svg',
-		'Tunisia': 'https://flagcdn.com/tn.svg',
+		Spain: 'https://flagcdn.com/es.svg',
+		Switzerland: 'https://flagcdn.com/ch.svg',
+		Tunisia: 'https://flagcdn.com/tn.svg',
 		'United States': 'https://flagcdn.com/us.svg',
-		'Uruguay': 'https://flagcdn.com/uy.svg',
-	}
+		Uruguay: 'https://flagcdn.com/uy.svg'
+	};
 
-	function navigateBook(id: number) {
+	async function navigateBook(id: number) {
 		let _token;
 		if (browser) {
 			_token = window.localStorage.getItem('token');
@@ -49,11 +49,7 @@
 		if (_token) {
 			window.location.replace('/reservation/' + id);
 		} else {
-            Swal.fire(
-            'Invalid!',
-            'You need to log in to reserve a match.',
-            'error'
-            );
+			await Swal.fire('Invalid!', 'You need to log in to reserve a match.', 'error');
 		}
 	}
 
@@ -69,8 +65,7 @@
 		if (_token) {
 			if (_role == 'Manager') {
 				window.location.replace('/manager/match/list');
-			}
-			else if (_role == 'Admin') {
+			} else if (_role == 'Admin') {
 				window.location.replace('/admin/list');
 			}
 			token = _token;
@@ -78,22 +73,30 @@
 		await getMatches();
 	});
 
-
-    let matches: { id: number, homeTeam: string, awayTeam: string, stadium: string, time: string, 
-        stadiumCapacity: number, emptySeats: number,  referee: string, firstLinesman: string, secondLinesman: string }[] = [];
-    async function getMatches() {
-        const response = await fetch('https://localhost:7123/api/matches', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        if (response.ok) {
-            const data = await response.json();
-            matches = data;
-        }
-    }
-
+	let matches: {
+		id: number;
+		homeTeam: string;
+		awayTeam: string;
+		stadium: string;
+		time: string;
+		stadiumCapacity: number;
+		emptySeats: number;
+		referee: string;
+		firstLinesman: string;
+		secondLinesman: string;
+	}[] = [];
+	async function getMatches() {
+		const response = await fetch('https://localhost:7123/api/matches', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		if (response.ok) {
+			const data = await response.json();
+			matches = data;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -110,16 +113,28 @@
 				<div class="match" on:click={() => navigateBook(match.id)}>
 					<div class="match-info">
 						<h4 class="group">{match.stadium}</h4>
-						<h4>Seats: {match.emptySeats}/{match.stadiumCapacity}<span class="badge">{match.id}</span></h4>
+						<h4>
+							Seats: {match.emptySeats}/{match.stadiumCapacity}<span class="badge">{match.id}</span>
+						</h4>
 					</div>
 					<div class="flags">
 						<div class="home-flag">
-							<img src="{flag_urls[match.homeTeam]}" style="width:60px" alt={match.homeTeam} class="flag" />
+							<img
+								src={flag_urls[match.homeTeam]}
+								style="width:60px"
+								alt={match.homeTeam}
+								class="flag"
+							/>
 							<h3 class="home-team">{match.homeTeam}</h3>
 						</div>
 						<span class="vs"> VS </span>
 						<div class="away-flag">
-							<img src="{flag_urls[match.awayTeam]}" style="width:60px" alt={match.awayTeam} class="flag" />
+							<img
+								src={flag_urls[match.awayTeam]}
+								style="width:60px"
+								alt={match.awayTeam}
+								class="flag"
+							/>
 							<h3 class="home-team">{match.awayTeam}</h3>
 						</div>
 					</div>
@@ -127,7 +142,9 @@
 						<div class="time">
 							<h4 class="month">{new Date(match.time).toString().split(' ')[1]}</h4>
 							<h4 class="day">{new Date(match.time).toString().split(' ')[2]}</h4>
-							<h4 class="date">{new Date(match.time).toLocaleTimeString().replace(':00:00', ':00')}</h4>
+							<h4 class="date">
+								{new Date(match.time).toLocaleTimeString().replace(':00:00', ':00')}
+							</h4>
 						</div>
 						<h4 class="match-time">
 							{match.referee}
