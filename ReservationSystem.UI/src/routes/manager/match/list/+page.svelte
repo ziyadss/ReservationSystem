@@ -77,7 +77,7 @@
                     <th scope="row">{i + 1}</th>
                     <td>{match.homeTeam}</td>
                     <td>{match.awayTeam}</td>
-                    <td>{match.stadiumName}</td>
+                    <td>{match.stadium}</td>
                     <td>{new Date(match.time).toLocaleTimeString([], {
                         year: 'numeric',
                         month: '2-digit',
