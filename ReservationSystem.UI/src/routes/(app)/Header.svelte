@@ -10,16 +10,11 @@
 		loggedin = localStorage.getItem('token') ? true : false;
 	}
 
-
 	function signOut() {
 		if (browser) {
 			window.localStorage.removeItem('token');
 			window.localStorage.removeItem('role');
-            Swal.fire(
-            'Log Out!',
-            'You have been logged out.',
-            'success'
-            );
+			Swal.fire('Log Out!', 'You have been logged out.', 'success');
 			window.location.replace('/');
 		}
 	}
@@ -59,22 +54,10 @@
 							<a href="/schedule" class="nav_link" target="_matches">Match Schedule </a>
 						{/if}
 					</li>
-					{#if loggedin}
-						<li class="nav_list">
-							{#if $page.url.pathname === '/reservation'}
-								<a href="/reservation" class="nav_link active">Reserve your seat!</a>
-							{:else}
-								<a href="/reservation" class="nav_link">Reserve your seat!</a>
-							{/if}
-						</li>
-					{/if}
+
 					<li class="nav_list btn-nav">
 						{#if loggedin}
-							<a
-								href="/"
-								class="btn-outline"
-								on:click={() => signOut()}
-							>
+							<a href="/" class="btn-outline" on:click={() => signOut()}>
 								<span>Logout</span>
 							</a>
 						{:else}
