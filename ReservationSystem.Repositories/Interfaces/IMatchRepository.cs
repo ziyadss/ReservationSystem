@@ -9,7 +9,7 @@ public interface IMatchRepository : IRepository<Match>
 {
     Task<Match?> FindAsync(int id);
 
-    new IEnumerable<MatchInfo> Get(int skip, int take);
+    IEnumerable<MatchInfo> Get();
 
     Task<MatchDetailedInfo?> GetAsync(int id);
 

@@ -7,6 +7,8 @@ using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Matches;
 using ReservationSystem.Repositories.Interfaces;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,31 +42,16 @@ public class MatchesController : BaseController<MatchesController>
     /// <summary>
     /// Gets a list of matches.
     /// </summary>
-    /// <param name="skip">The index of the first match to return.</param>
-    /// <param name="take">The maximum number of matches to return.</param>
-    /// <response code="200">Returns a <see cref="PaginationResult{TElement}"/> of <see cref="MatchInfo"/> items.</response>
+    /// <response code="200">Returns a list of <see cref="MatchInfo"/> items.</response>
     [HttpGet]
-    [ProducesResponseType(typeof(PaginationResult<MatchInfo>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetMatches([FromQuery] int skip = 0, [FromQuery] int take = 10)
+    [ProducesResponseType(typeof(IEnumerable<MatchInfo>), StatusCodes.Status200OK)]
+    public IActionResult GetMatches()
     {
         _logger.LogInformation($"Call to {nameof(MatchesController)}.{nameof(GetMatches)}");
 
-        var matches = _matchRepository.Get(skip, take);
-        var count = await _matchRepository.CountAsync().ConfigureAwait(false);
+        var matches = _matchRepository.Get();
 
-        var done = skip + take >= count;
-        var next = done ? null : Url.ActionLink(values: new { skip = skip + take, take });
-
-        var result = new PaginationResult<MatchInfo>
-        {
-            Items = matches,
-            Skip = skip,
-            Take = take,
-            Total = count,
-            Next = next
-        };
-
-        return Ok(result);
+        return Ok(matches);
     }
 
     /// <summary>

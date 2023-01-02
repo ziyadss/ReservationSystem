@@ -97,7 +97,7 @@ public class MatchRepository : BaseRepository<Match>, IMatchRepository
         await UpdateTickets(match).ConfigureAwait(false);
     }
 
-    public new IEnumerable<MatchInfo> Get(int skip, int take) => base.Get(skip, take).Include(m => m.Stadium).Include(m => m.Tickets).Select(m => new MatchInfo(m));
+    public IEnumerable<MatchInfo> Get() => _entitySet.Include(m => m.Stadium).Include(m => m.Tickets).Select(m => new MatchInfo(m));
 
     public async Task<MatchDetailedInfo?> GetAsync(int id)
     {
