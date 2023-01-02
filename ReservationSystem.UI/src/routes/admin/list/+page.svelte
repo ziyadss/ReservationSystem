@@ -3,7 +3,7 @@
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
     import Swal from 'sweetalert2';
-	import 'sweetalert2/src/sweetalert2.scss';
+    import 'sweetalert2/src/sweetalert2.scss'
 
     let token = '';
     onMount(async () => {
