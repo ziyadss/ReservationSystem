@@ -23,6 +23,8 @@
             }
             token = _token;
         }
+
+        getUsers();
     });
 
     let take = 50;
@@ -116,8 +118,6 @@
             alert("HTTP-Error: " + response.status);
         }
     }
-
-    getUsers();
 
 </script>
 
