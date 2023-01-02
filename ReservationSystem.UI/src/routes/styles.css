@@ -511,3 +511,41 @@ body {
     color: var(--secondary);
     font-size: 1rem;
 }
+
+#reservationPage {
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+#reservationPage .title {
+    color: var(--primary);
+    font-size: 2rem;
+}
+
+#reservationPage .btn {
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-size: 1rem;
+}
+
+#reservationPage .btn:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+#reservationPage .btn-cancel {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+#reservationPage .btn-cancel:hover {
+
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-size: 1rem;
+}
+
+#reservationPage .form-outline input {
+    background-color: white;
+    font-size: 1.5rem;
+}
