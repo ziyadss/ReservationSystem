@@ -3,6 +3,8 @@
     import { onMount } from "svelte";
 	import { enhance } from "$app/forms";
     import participants from '$lib/mock/participating-countries.json';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	let token = '';
     // list of objects with name and id
@@ -36,11 +38,19 @@
 
     async function createStadium() {
         if (stadium.rows <= 0) {
-            alert('rows cannot equal 0');
+            Swal.fire(
+            'Invalid!',
+            'Rows cannot be zero.',
+            'error'
+            );
             return;
         }
         if (stadium.columns <= 0) {
-            alert('columns cannot equal 0');
+            Swal.fire(
+            'Invalid!',
+            'Columns cannot be zero.',
+            'error'
+            );
             return;
         }
 
@@ -56,12 +66,20 @@
         });
         if (response.ok) {
             const data = await response.json();
-			alert('Success adding stadium');
+            Swal.fire(
+            'Stadium Added!',
+            'Stadium has been added.',
+            'success'
+            );
             window.location.replace('/manager/stadium/create');
         }
         else {
             const error = await response.json();
-            alert('Error adding stadium: ' + error.InvalidMessage);
+            Swal.fire(
+            'Failed!',
+            'Error adding stadium: ' + error.InvalidMessage,
+            'success'
+            );
             return;
         }
     }   
