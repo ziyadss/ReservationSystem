@@ -1,12 +1,25 @@
-<script lang='ts'>
+<script lang="ts">
+	import { page } from '$app/stores';
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
-	import { enhance } from "$app/forms";
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
     import participants from '$lib/mock/participating-countries.json';
 
-	let token = '';
-    // list of objects with name and id
+	const id = $page.params.id;
     let stadiums: { name: string, capacity: number }[] = [];
+	let token = '';
+
+    const date = new Date();
+    let match = {
+        homeTeam: '',
+        awayTeam: '',
+        stadium: '',
+        time: date,
+        referee: '',
+        firstLinesman: '',
+        secondLinesman: ''
+    }
 
 	onMount(async () => {
 		let _token;
@@ -24,24 +37,16 @@
 				window.location.replace('/admin/list');
 			}
 			token = _token;
-
 		}
         await getStadiums();
+		const response = await fetch('https://localhost:7123/api/matches/' + id);
+		if (response.ok) {
+			const data = await response.json();
+			match = data;
+		}
 	});
 
-
-    const date = new Date();
-    let match = {
-        homeTeam: '',
-        awayTeam: '',
-        stadium: '',
-        time: date,
-        referee: '',
-        firstLinesman: '',
-        secondLinesman: ''
-    }
-
-    async function getStadiums() {
+	async function getStadiums() {
         const response = await fetch('https://localhost:7123/api/stadiums', {
             method: 'GET',
             headers: {
@@ -54,7 +59,7 @@
         }
     };
 
-    async function createMatch() {
+	async function updateMatch() {
         if (match.time < new Date()) {
             alert('Match time cannot be in the past');
             return;
@@ -64,8 +69,8 @@
             return;
         }
 
-        const response = await fetch('https://localhost:7123/api/matches', {
-            method: 'POST',
+        const response = await fetch('https://localhost:7123/api/matches/' + id, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token
@@ -84,11 +89,11 @@
             alert('Error creating match:');
             return;
         }
-    }   
+	}
 </script>
 
 <svelte:head>
-    <title>Create Match</title>
+    <title>Update Match</title>
 </svelte:head>
 
 <div class="container justify-content-center p-3">
@@ -97,7 +102,7 @@
             <h4>Add New Match</h4>
         </div>
         <div class="text-danger"></div>
-        <form on:submit|preventDefault={createMatch} id="add-match-form">
+        <form on:submit|preventDefault={updateMatch} id="add-match-form">
             <div class="card-body">
                 <div class="form-row row">
                     <div class="form-group col-6">
@@ -126,9 +131,13 @@
                 <div class="form-row row">
                     <div class="form-group col">
                         <label for="stadium" class="col-form-label">Stadium</label>
-                        <select class="form-control" bind:value={match.stadium} required>
+                        <select class="form-control" bind:value={match.stadiumName} required>
                             {#each stadiums as stadium}
-                                <option value={stadium.name}>{stadium.name}</option>
+								{#if match.stadium == stadium.name}
+									<option selected value={stadium.name}>{stadium.name}</option>
+								{:else}
+									<option value={stadium.name}>{stadium.name}</option>
+								{/if}
                             {/each}
                         </select>
                     </div>
@@ -150,7 +159,7 @@
             </div>
             <div class="card-footer">
                 <div class="form-row">
-                    <button class="btn btn-primary" type="submit">Add Match</button>
+                    <button class="btn btn-primary" type="submit">Edit Match</button>
                 </div>
             </div>
         </form>
