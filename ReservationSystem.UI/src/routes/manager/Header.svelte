@@ -2,6 +2,8 @@
 	import logo from '$lib/images/logo.svg';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	let loggedin = false;
 	if (browser) {
@@ -13,7 +15,11 @@
 		if (browser) {
 			window.localStorage.removeItem('token');
 			window.localStorage.removeItem('role');
-			alert('You have been logged out');
+            Swal.fire(
+            'Log Out!',
+            'You have been logged out.',
+            'success'
+            );
 			window.location.replace('/');
 		}
 	}
@@ -81,16 +87,16 @@
         </li>
         <li class="nav-item">
             {#if currentURL.includes('stadium')}
-                <a class="nav-link active" href="/manager/stadium/list">Stadium</a>
+                <a class="nav-link active" href="/manager/stadium/create">Create Stadium</a>
             {:else}
-                <a class="nav-link" href="/manager/stadium/list">Stadium</a>
+                <a class="nav-link" href="/manager/stadium/create">Create Stadium</a>
             {/if}
         </li>
       </ul>
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2" on:click={() => signOut()}>
+        <button type="button" class="btn btn-dark-outline px-3 me-2" style="box-shadow: none;" on:click={() => signOut()}>
             Logout
         </button>
       </div>

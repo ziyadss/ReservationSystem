@@ -1,6 +1,8 @@
 <script lang="js">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	//check if logged in before loading page and get user data
 	let token = '';
@@ -59,7 +61,11 @@
 
 	async function changePasswordRequest() {
 		if (password != confirmpassword) {
-			alert('Passwords do not match');
+            Swal.fire(
+            'Invalid!',
+            'Passwords do not match.',
+            'error'
+            );
 			return;
 		} else {
 			passwordPayload.newpassword = confirmpassword;
@@ -73,10 +79,18 @@
 			body: JSON.stringify(passwordPayload)
 		});
 		if (respone.ok) {
-			alert('Password changed successfully');
+            Swal.fire(
+            'Password Changed!',
+            'Password changed successfully.',
+            'success'
+            );
 			window.location.replace('/profile');
 		} else {
-			alert('Error changing password');
+            Swal.fire(
+            'Failed!',
+            'Error changing passwords.',
+            'error'
+            );
 		}
 	}
 
@@ -90,10 +104,18 @@
 			body: JSON.stringify(profilePayload)
 		});
 		if (response.ok) {
-			alert('Profile updated successfully');
+            Swal.fire(
+            'Profile Updated!',
+            'Profile updated successfully.',
+            'success'
+            );
 			window.location.replace('/profile');
 		} else {
-			alert('Error updating profile');
+            Swal.fire(
+            'Failed!',
+            'Error updating profile.',
+            'error'
+            );
 		}
 	}
 

@@ -61,11 +61,19 @@
 
 	async function updateMatch() {
         if (match.time < new Date()) {
-            alert('Match time cannot be in the past');
+            Swal.fire(
+            'Invalid!',
+            'Match time cannot be in the past.',
+            'error'
+            );
             return;
         }
         if (match.homeTeam == match.awayTeam) {
-            alert('Home team and away team cannot be the same');
+            Swal.fire(
+            'Invalid!',
+            'Home and away team cannot be the same.',
+            'error'
+            );
             return;
         }
 
@@ -81,12 +89,21 @@
         });
         if (response.ok) {
             const data = await response.json();
-			alert('Success editing match');
+            Swal.fire(
+            'Match Edited!',
+            'The match has been edited.',
+            'success'
+            );
             window.location.replace('/manager/match/list');
         }
         else {
 			const error = await response.json();
-            alert(error.InvalidMatch);
+            console.log(response.json());
+            Swal.fire(
+            'Failed!',
+            'Error editing match.',
+            'error'
+            );
             return;
         }
 	}

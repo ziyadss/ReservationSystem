@@ -4,6 +4,8 @@
 	import cover from '$lib/images/cover-photo.jpg';
 	import { onMount } from "svelte";
 	import { redirect } from "@sveltejs/kit";
+	import Swal from 'sweetalert2';
+	import 'sweetalert2/src/sweetalert2.scss';
 
 	let token = '';
 	onMount(async () => {
@@ -59,7 +61,11 @@
 				window.location.replace('/admin/list');
 			}
 		} else {
-			alert('Invalid credentials');
+            Swal.fire(
+            'Invalid!',
+            'Invalid credentials.',
+            'error'
+            );
 		}
 	}
 	//hide label on input
