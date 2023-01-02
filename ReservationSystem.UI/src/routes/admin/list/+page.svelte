@@ -2,6 +2,7 @@
     import '../../styles.css';
     import { browser } from "$app/environment"
     import { onMount } from "svelte";
+    import Swal from 'sweetalert2';
 
     let token = '';
     onMount(async () => {
@@ -83,50 +84,75 @@
     }
 
     async function deleteUser(username: string) {
-        let confirm = window.confirm("Are you sure you want to delete this user?");
-        if (!confirm) {
-            return;
-        }
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then(async (result: Swal.SweetAlertResult) => {
+            if (result.value) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                );
+                const response = await fetch('https://localhost:7123/api/users/' + username, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                });
 
-        const response = await fetch('https://localhost:7123/api/users/' + username, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + token
+                if (response.ok) {
+                    alert("User deleted successfully");
+                    await getUsers();
+                } else {
+                    alert("HTTP-Error: " + response.status);
+                }
             }
         });
-
-        if (response.ok) {
-            alert("User deleted successfully");
-            await getUsers();
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
     }
 
     async function authorizeUser(username: string) {
-        let confirm = window.confirm("Are you sure you want to authorize this user?");
-        if (!confirm) {
-            return;
-        }
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to authorize this user?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, authorize it!'
+        }).then(async (result: Swal.SweetAlertResult) => {
+            if (result.value) {
+                Swal.fire(
+                'Authorized!',
+                'The user has been authorized.',
+                'success'
+                );
+                // Make PATCH request to API to update user's role to "Manager" here
+                const response = await fetch('https://localhost:7123/api/users/' + username, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    },
+                    body: JSON.stringify({
+                        role: 'Manager'
+                    })
+                });
 
-        const response = await fetch('https://localhost:7123/api/users/' + username, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                role: 'Manager'
-            })
+                if (response.ok) {
+                    alert("User authorized successfully");
+                    await getUsers();
+                } else {
+                    alert("HTTP-Error: " + response.status);
+                }
+            }
         });
-
-        if (response.ok) {
-            alert("User authorized successfully");
-            await getUsers();
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
     }
 
 </script>
