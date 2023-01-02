@@ -105,7 +105,7 @@
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-        }).then(async (result: Swal.SweetAlertResult) => {
+        }).then(async (result ) => {
             if (result.value) {
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'DELETE',
@@ -142,7 +142,7 @@
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, authorize it!'
-        }).then(async (result: Swal.SweetAlertResult) => {
+        }).then(async (result) => {
             if (result.value) {
                 const response = await fetch('https://localhost:7123/api/users/' + username, {
                     method: 'PATCH',

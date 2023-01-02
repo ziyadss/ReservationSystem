@@ -35,15 +35,6 @@
 
 <div class="schedule-page">
 	<div class="container-custom">
-		<div class="match-tabs">
-			<li class="tab-link">
-				<a href="#match-date">Match By Date</a>
-			</li>
-			<li class="tab-link">
-				<a href="#match-group">Match By Group</a>
-			</li>
-		</div>
-		<!-- <h1 class="section-heading">Match By Date</h1> -->
 		<div class="matchs" id="match-date">
 			{#each matches as match}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
