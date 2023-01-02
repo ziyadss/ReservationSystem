@@ -37,6 +37,8 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         });
 
         SeedInitialUsers(modelBuilder);
+
+        SeedStadiums(modelBuilder);
     }
 
     private static void SeedInitialUsers(ModelBuilder modelBuilder)
@@ -86,7 +88,7 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
             Nationality = "eg"
         };
         initialUser.PasswordHash = hasher.HashPassword(initialUser, "user");
-        
+
         modelBuilder.Entity<User>().HasData(admin, initialManager, initialUser);
 
         modelBuilder.Entity<Role>().HasData(Role.Roles);
@@ -110,5 +112,22 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
         };
 
         modelBuilder.Entity<IdentityUserRole<string>>().HasData(adminRole, initialManagerRole, initialUserRole);
+    }
+
+    public static void SeedStadiums(ModelBuilder modelBuilder)
+    {
+        var stadiums = new Stadium[]
+        {
+            new Stadium { Name = "Lusail Stadium", Rows = 1, Columns = 2 },
+            new Stadium { Name = "Al Bayt Stadium", Rows = 2, Columns = 4 },
+            new Stadium { Name = "Khalifa International Stadium", Rows = 4, Columns = 8 },
+            new Stadium { Name = "Ahmad bin Ali Stadium", Rows = 8, Columns = 16 },
+            new Stadium { Name = "Education City Stadium", Rows = 32, Columns = 64 },
+            new Stadium { Name = "Al Thumama Stadium", Rows = 64, Columns = 128 },
+            new Stadium { Name = "Stadium 974", Rows = 128, Columns = 256 },
+            new Stadium { Name = "Al Janoub Stadium", Rows = 256, Columns = 512 }
+        };
+
+        modelBuilder.Entity<Stadium>().HasData(stadiums);
     }
 }

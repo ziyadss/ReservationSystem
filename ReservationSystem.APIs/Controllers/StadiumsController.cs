@@ -6,6 +6,7 @@ using ReservationSystem.Data.Stadiums;
 using ReservationSystem.DataStructures;
 using ReservationSystem.DataStructures.Stadiums;
 using ReservationSystem.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ReservationSystem.APIs.Controllers;
@@ -32,31 +33,16 @@ public class StadiumsController : BaseController<StadiumsController>
     /// <summary>
     /// Gets a list of stadiums.
     /// </summary>
-    /// <param name="skip">The index of the first stadium to return.</param>
-    /// <param name="take">The maximum number of stadiums to return.</param>
-    /// <response code="200">Returns a <see cref="PaginationResult{TElement}"/> of <see cref="StadiumInfo"/> items.</response>
+    /// <response code="200">Returns a list of <see cref="StadiumInfo"/> items.</response>
     [HttpGet]
-    [ProducesResponseType(typeof(PaginationResult<StadiumInfo>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetStadiums([FromQuery] int skip = 0, [FromQuery] int take = 10)
+    [ProducesResponseType(typeof(IEnumerable<StadiumInfo>), StatusCodes.Status200OK)]
+    public IActionResult GetStadiums()
     {
         _logger.LogInformation($"Call to {nameof(StadiumsController)}.{nameof(GetStadiums)}");
 
-        var stadiums = _stadiumRepository.Get(skip, take);
-        var count = await _stadiumRepository.CountAsync().ConfigureAwait(false);
+        var stadiums = _stadiumRepository.Get();
 
-        var done = skip + take >= count;
-        var next = done ? null : Url.ActionLink(values: new { skip = skip + take, take });
-
-        var result = new PaginationResult<StadiumInfo>
-        {
-            Items = stadiums,
-            Skip = skip,
-            Take = take,
-            Total = count,
-            Next = next
-        };
-
-        return Ok(result);
+        return Ok(stadiums);
     }
 
     /// <summary>

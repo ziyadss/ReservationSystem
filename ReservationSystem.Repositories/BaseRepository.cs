@@ -19,22 +19,11 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         _entitySet = _dbContext.Set<TEntity>();
     }
 
-    public virtual Task<int> CountAsync()
-    {
-        return _entitySet.CountAsync();
-    }
+    public virtual Task<int> CountAsync() => _entitySet.CountAsync();
 
-    public virtual async Task<TEntity?> FindAsync(params object[] keyValues)
-    {
-        var entity = await _entitySet.FindAsync(keyValues).ConfigureAwait(false);
+    public virtual async Task<TEntity?> FindAsync(params object[] keyValues) => await _entitySet.FindAsync(keyValues).ConfigureAwait(false);
 
-        return entity;
-    }
-
-    public virtual IQueryable<TEntity> Get(int skip, int take)
-    {
-        return _entitySet.Skip(skip).Take(take);
-    }
+    public virtual IQueryable<TEntity> Get(int skip, int take) => _entitySet.Skip(skip).Take(take);
 
     public virtual async Task AddAsync(TEntity item)
     {
