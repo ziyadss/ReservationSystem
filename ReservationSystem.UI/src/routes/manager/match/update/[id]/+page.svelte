@@ -131,7 +131,7 @@
                 <div class="form-row row">
                     <div class="form-group col">
                         <label for="stadium" class="col-form-label">Stadium</label>
-                        <select class="form-control" bind:value={match.stadiumName} required>
+                        <select class="form-control" bind:value={match.stadium} required>
                             {#each stadiums as stadium}
 								{#if match.stadium == stadium.name}
 									<option selected value={stadium.name}>{stadium.name}</option>
