@@ -153,7 +153,7 @@ public class ReservationSystemDbContext : IdentityDbContext<User, Role, string>
             {
                 Id = id,
                 HomeTeamName = seedingTeams[i * 13 % seedingTeams.Length],
-                AwayTeamName = seedingTeams[(i * 11 + 7) % seedingTeams.Length],
+                AwayTeamName = seedingTeams[(i * 11 + 13) % seedingTeams.Length],
                 StadiumName = stadiums[stadiumIndex].Name,
                 DateTime = new DateTime(2023, i % 12 + 1, i % 29 + 1, i % 14 + 8, 0, 0),
                 Referee = "Referee " + ((i % 4) + 1),

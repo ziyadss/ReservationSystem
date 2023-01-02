@@ -24,9 +24,9 @@ public class MatchBriefInfo
     public string AwayTeam { get; set; }
 
     /// <summary>
-    /// The match stadium name.
+    /// The match stadium.
     /// </summary>    
-    public string StadiumName { get; set; }
+    public string Stadium { get; set; }
 
     /// <summary>
     /// The match time.
@@ -42,7 +42,7 @@ public class MatchBriefInfo
         Id = match.Id;
         HomeTeam = match.HomeTeamName;
         AwayTeam = match.AwayTeamName;
-        StadiumName = match.StadiumName;
+        Stadium = match.StadiumName;
         Time = match.DateTime;
     }
 }
