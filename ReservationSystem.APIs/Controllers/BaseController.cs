@@ -11,7 +11,7 @@ namespace ReservationSystem.APIs.Controllers;
 /// Base class for controllers.
 /// </summary>
 /// <typeparam name="TController">The type of the controller.</typeparam>
-public class BaseController<TController> : ControllerBase
+public abstract class BaseController<TController> : ControllerBase
     where TController : BaseController<TController>
 {
     /// <summary>
